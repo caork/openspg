@@ -14,11 +14,33 @@ This page documents runnable examples stored in the `reasoner-examples` module.
 mvn -pl reasoner-examples -am exec:java
 ```
 
+## Local runner configuration tips
+
+The local runner is configured through `LocalReasonerTask`:
+
+- `setDsl(...)` or `setDslDagList(...)` for the KGDSL or preplanned operators.
+- `setCatalog(...)` or `setSchemaString(...)` for schema binding.
+- `setGraphLoadClass(...)` or `setGraphState(...)` for graph loading.
+- `setParams(...)` for runtime controls (see `ConfigKey`).
+
+Common parameters:
+
+- `ConfigKey.KG_REASONER_OUTPUT_GRAPH`: return inferred graph data.
+- `ConfigKey.KG_REASONER_MOCK_GRAPH_DATA`: inline graph data for quick testing.
+- `ConfigKey.KG_REASONER_MAX_PATH_LIMIT`: cap path expansion.
+- `ConfigKey.KG_REASONER_STRICT_MAX_PATH_THRESHOLD`: fail fast on path overflow.
+
 ## Files
 
 - `reasoner-examples/src/main/resources/kgdsl/rca_root_cause.kgdsl`: RCA inference rule (Incident -> rootCause -> Component).
 - `reasoner-examples/src/main/java/com/antgroup/openspg/examples/RcaLocalRunnerExample.java`: Java example that loads a graph and runs the RCA rule.
 - `reasoner-examples/src/main/resources/kgdsl/student_teacher.kgdsl`: basic KGDSL pattern with a `get` action.
+- `reasoner-examples/src/main/resources/kgdsl/graph_exploration.kgdsl`: graph exploration starting from seed accounts and expanding via transfers, devices, IPs, and merchants.
+- `reasoner-examples/src/main/java/com/antgroup/openspg/examples/GraphExplorationLocalRunnerExample.java`: Java example that loads the exploration graph and runs the DSL.
+- `reasoner-examples/src/main/resources/tutorials/graph_exploration_tutorial.md`: tutorial for the seed-based exploration scenario.
+- `reasoner-examples/src/main/resources/kgdsl/network_root_cause.kgdsl`: network root cause analysis for call issues (SIM arrears, backhaul outage, and low speed).
+- `reasoner-examples/src/main/java/com/antgroup/openspg/examples/NetworkRootCauseLocalRunnerExample.java`: Java example that runs the network root cause rules.
+- `reasoner-examples/src/main/resources/tutorials/network_root_cause_tutorial.md`: tutorial for the network root cause scenario.
 
 ## RCA KGDSL example
 
@@ -127,8 +149,46 @@ public class RcaLocalRunnerExample {
 }
 ```
 
+## Graph exploration KGDSL example
+
+```
+GraphStructure {
+  Seed [Account, __start__='true']
+  Peer [Account]
+  Owner [Person]
+  SeedDevice [Device]
+  PeerDevice [Device]
+  SeedIp [Ip]
+  PeerIp [Ip]
+  SeedTxn [Transaction]
+  PeerTxn [Transaction]
+  SeedMerchant [Merchant]
+  PeerMerchant [Merchant]
+  SeedCity [City]
+  PeerCity [City]
+  Seed->Peer [transfer] repeat(1,3) as transferPath
+  Seed->Owner [ownedBy]
+  Seed->SeedDevice [loginWith, __optional__='true'] as seedDevice
+  Peer->PeerDevice [loginWith, __optional__='true'] as peerDevice
+  SeedDevice->SeedIp [bindIp, __optional__='true'] as seedIp
+  PeerDevice->PeerIp [bindIp, __optional__='true'] as peerIp
+  Seed->SeedTxn [makeTxn, __optional__='true'] as seedTxn
+  Peer->PeerTxn [makeTxn, __optional__='true'] as peerTxn
+  SeedTxn->SeedMerchant [toMerchant, __optional__='true'] as seedMerchant
+  PeerTxn->PeerMerchant [toMerchant, __optional__='true'] as peerMerchant
+  SeedMerchant->SeedCity [locatedIn, __optional__='true'] as seedCity
+  PeerMerchant->PeerCity [locatedIn, __optional__='true'] as peerCity
+}
+Rule {
+  R1: Seed.riskLevel == 'HIGH'
+  R2: group(Seed).keep_shortest_path(transferPath)
+}
+Action {
+  get(Seed.id, Peer.id, Owner.name, SeedDevice.id, PeerDevice.id, SeedIp.ip, PeerIp.ip, SeedTxn.amount, PeerTxn.amount, SeedMerchant.name, PeerMerchant.name, SeedCity.name, PeerCity.name, __path__)
+}
+```
+
 ## Notes
 
 - `LocalReasonerRunner` uses the graph loader class to populate an in-memory `GraphState`.
 - The inferred `rootCause` edge is returned in the graph result.
-

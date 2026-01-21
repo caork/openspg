@@ -1,0 +1,125 @@
+// Root cause inference: SIM arrears event
+Define (ci:CallIssue)-[rc:rootCause]->(ev:Event) {
+  GraphStructure {
+    ci [CallIssue]
+    u [User]
+    sim [SimCard]
+    ev [Event]
+    ci->u [reportedBy]
+    u->sim [usesSim]
+    sim->ev [hasEvent]
+  }
+  Rule {
+    R1: sim.status == 'ARREARS'
+    R2: ev.eventType == 'SIM_ARREARS'
+  }
+  Action {
+    createEdgeInstance(
+      src=ci,
+      dst=ev,
+      type=rootCause,
+      value={}
+    )
+  }
+}
+
+// Root cause inference: backhaul outage event
+Define (ci:CallIssue)-[rc:rootCause]->(ev:Event) {
+  GraphStructure {
+    ci [CallIssue]
+    u [User]
+    sim [SimCard]
+    bs [BaseStation]
+    n [NetworkNode]
+    ev [Event]
+    ci->u [reportedBy]
+    u->sim [usesSim]
+    ci->bs [at]
+    bs->n [connectedTo] repeat(1,3) as backhaulPath
+    n->ev [hasEvent]
+  }
+  Rule {
+    R1: sim.status != 'ARREARS'
+    R2: bs.successRate < 0.9
+    R3: n.signalLossRate > 0.3
+    R4: ev.eventType == 'BACKHAUL_OUTAGE'
+    R5: ev.severity >= 3
+    R6: group(ci).keep_shortest_path(backhaulPath)
+  }
+  Action {
+    createEdgeInstance(
+      src=ci,
+      dst=ev,
+      type=rootCause,
+      value={}
+    )
+  }
+}
+
+// Root cause inference: local low speed event
+Define (ci:CallIssue)-[rc:rootCause]->(ev:Event) {
+  GraphStructure {
+    ci [CallIssue]
+    u [User]
+    sim [SimCard]
+    bs [BaseStation]
+    st [SpeedTest]
+    ev [Event]
+    ci->u [reportedBy]
+    u->sim [usesSim]
+    ci->bs [at]
+    u->st [speedTest]
+    st->ev [hasEvent]
+  }
+  Rule {
+    R1: sim.status != 'ARREARS'
+    R2: bs.successRate >= 0.98
+    R3: st.downMbps < 1.0
+    R4: ev.eventType == 'LOW_SPEED'
+  }
+  Action {
+    createEdgeInstance(
+      src=ci,
+      dst=ev,
+      type=rootCause,
+      value={}
+    )
+  }
+}
+
+// Exploration query: return the inferred root cause plus context
+GraphStructure {
+  ci [CallIssue, __start__='true']
+  u [User]
+  sim [SimCard]
+  bs [BaseStation]
+  st [SpeedTest]
+  n [NetworkNode]
+  ev [Event]
+  ci->u [reportedBy]
+  u->sim [usesSim]
+  ci->bs [at]
+  u->st [speedTest, __optional__='true'] as speedEdge
+  bs->n [connectedTo] repeat(1,3) as backhaulPath
+  ci->ev [rootCause] as rootEdge
+}
+Rule {
+  R1: group(ci).keep_shortest_path(backhaulPath)
+}
+Action {
+  get(
+    ci.id,
+    ci.issueType,
+    u.id,
+    bs.id,
+    bs.successRate,
+    sim.status,
+    st.downMbps,
+    n.id,
+    n.signalLossRate,
+    ev.id,
+    ev.eventType,
+    ev.severity,
+    __path__
+  )
+}

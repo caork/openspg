@@ -12,6 +12,8 @@ Plans logical operators into physical operators and defines the RDG execution in
 - `rdg/Row.scala`: row output for tabular results.
 - `PropertyGraph`: engine-specific RDG construction.
 
+Physical operators include `PatternScan`, `ExpandInto`, `LinkedExpand`, `Filter`, `Join`, `Aggregate`, `OrderBy`, `Fold`, `Unfold`, `DDL`, and `Union`.
+
 ## Inputs and outputs
 
 - Input: `LogicalOperator` tree.
@@ -21,4 +23,3 @@ Plans logical operators into physical operators and defines the RDG execution in
 
 - RDG implementations must satisfy the `RDG` interface.
 - Physical operators map directly onto RDG methods.
-

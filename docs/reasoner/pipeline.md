@@ -20,6 +20,8 @@ This section explains how KGDSL is processed from text to execution.
 - Output: `LogicalOperator` tree (plan for query semantics).
 - Optimizer: `LogicalOptimizer` (rule rewrites and simplifications).
 
+Common optimization rules include `FilterPushDown`, `AggregatePushDown`, `ProjectMerge`, and `ExpandIntoPure` (see `reasoner/lube-logical/.../optimizer/rules`).
+
 ## Step 4: Physical planning
 
 - Planner: `PhysicalPlanner` in `reasoner/lube-physical`.
@@ -31,6 +33,12 @@ This section explains how KGDSL is processed from text to execution.
 - If the graph is not loaded, `LoaderUtil.getLoaderConfig` builds a loader config
   from the optimized logical plan, and `loadGraph` is invoked.
 - The loaded graph is registered into the runtime session.
+
+Graph loading is driven by `GraphLoaderConfig` (`reasoner/warehouse/warehouse-common`) and can be backed by:
+
+- In-memory `GraphState` (`MemGraphState`).
+- RocksDB `GraphState` (`RocksdbGraphState`).
+- Graph store backed `GraphState` (`GraphStoreGraphState` or `CloudExtGraphState`).
 
 ## Step 6: Execution
 
@@ -55,4 +63,3 @@ KGReasonerSession.getResult(query)
 - Replace `ParserInterface` to support another DSL.
 - Replace `Catalog` to bind schema from a different source.
 - Replace RDG implementation for a new execution engine.
-

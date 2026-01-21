@@ -19,6 +19,15 @@ Reasoner is the subsystem that turns KGDSL queries and rules into executable gra
 - Runtime session and graph state: `reasoner/runner/runner-common`.
 - Local execution: `reasoner/runner/local-runner`.
 
+## Core concepts
+
+- **KGDSL**: domain-specific language for graph patterns, rules, and actions.
+- **Block IR**: unresolved logical blocks emitted by the parser.
+- **LogicalOperator**: optimized logical plan tree.
+- **PhysicalOperator**: executable plan over RDG.
+- **RDG**: physical execution abstraction (pattern scan, expand, filter, join, etc).
+- **GraphState**: graph storage abstraction (memory, RocksDB, or graph store backed).
+
 ## Where to go next
 
 - [End to end pipeline](pipeline.md)
@@ -26,4 +35,3 @@ Reasoner is the subsystem that turns KGDSL queries and rules into executable gra
 - [RDG execution model](rdg.md)
 - [Runtime and sessions](runtime.md)
 - [SDK extraction guide](sdk.md)
-

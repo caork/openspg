@@ -2,6 +2,8 @@
 
 This map links to module-specific docs and shows how the Reasoner submodules fit together.
 
+If you are extracting a subset, start with the core list and then add optional modules based on your runtime needs (UDFs, warehouse loading, server-backed catalog).
+
 ## Core
 
 - [reasoner (parent)](modules/reasoner.md)
@@ -18,4 +20,3 @@ This map links to module-specific docs and shows how the Reasoner submodules fit
 - [udf](modules/udf.md)
 - [warehouse](modules/warehouse.md)
 - [openspg-catalog](modules/openspg-catalog.md)
-

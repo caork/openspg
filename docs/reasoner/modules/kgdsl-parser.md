@@ -11,6 +11,8 @@ Parses KGDSL into the Lube IR (`Block` and expression or pattern objects).
 - Pattern and expression parsers: `parser/pattern/*` and `parser/expr/*`.
 - Error handling: `ErrorHandlerStrategy`.
 
+The grammar includes `Define` blocks, `GraphStructure`, `Rule`, and `Action`, plus graph mutation actions such as `createEdgeInstance` and `createNodeInstance`.
+
 ## Inputs and outputs
 
 - Input: KGDSL text string.
@@ -20,4 +22,3 @@ Parses KGDSL into the Lube IR (`Block` and expression or pattern objects).
 
 - Output blocks are validated by `Validator` and planned by `LogicalPlanner`.
 - If you replace KGDSL, provide another `ParserInterface` implementation.
-

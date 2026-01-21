@@ -20,9 +20,11 @@ Key operations include:
 - It is used by `LocalReasonerSession` for local execution and tests.
 - `LocalPropertyGraph` builds RDG instances from a local graph state.
 
+Local graph state can be memory or RocksDB based, and may be populated via a graph loader class or a `GraphState` instance injected into `LocalReasonerTask`.
+
 ## How RDG relates to physical operators
 
-Physical operators (e.g., `PatternScan`, `Filter`, `Join`) map directly to RDG methods. The physical planner wires these operators into a tree that is executed by `KGReasonerSession`.
+Physical operators (e.g., `PatternScan`, `ExpandInto`, `LinkedExpand`, `Filter`, `Join`, `Aggregate`) map directly to RDG methods. The physical planner wires these operators into a tree that is executed by `KGReasonerSession`.
 
 ## Extension points
 

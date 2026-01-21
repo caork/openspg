@@ -1,0 +1,34 @@
+GraphStructure {
+  Seed [Account, __start__='true']
+  Peer [Account]
+  Owner [Person]
+  SeedDevice [Device]
+  PeerDevice [Device]
+  SeedIp [Ip]
+  PeerIp [Ip]
+  SeedTxn [Transaction]
+  PeerTxn [Transaction]
+  SeedMerchant [Merchant]
+  PeerMerchant [Merchant]
+  SeedCity [City]
+  PeerCity [City]
+  Seed->Peer [transfer] repeat(1,3) as transferPath
+  Seed->Owner [ownedBy]
+  Seed->SeedDevice [loginWith, __optional__='true'] as seedDevice
+  Peer->PeerDevice [loginWith, __optional__='true'] as peerDevice
+  SeedDevice->SeedIp [bindIp, __optional__='true'] as seedIp
+  PeerDevice->PeerIp [bindIp, __optional__='true'] as peerIp
+  Seed->SeedTxn [makeTxn, __optional__='true'] as seedTxn
+  Peer->PeerTxn [makeTxn, __optional__='true'] as peerTxn
+  SeedTxn->SeedMerchant [toMerchant, __optional__='true'] as seedMerchant
+  PeerTxn->PeerMerchant [toMerchant, __optional__='true'] as peerMerchant
+  SeedMerchant->SeedCity [locatedIn, __optional__='true'] as seedCity
+  PeerMerchant->PeerCity [locatedIn, __optional__='true'] as peerCity
+}
+Rule {
+  R1: Seed.riskLevel == 'HIGH'
+  R2: group(Seed).keep_shortest_path(transferPath)
+}
+Action {
+  get(Seed.id, Peer.id, Owner.name, SeedDevice.id, PeerDevice.id, SeedIp.ip, PeerIp.ip, SeedTxn.amount, PeerTxn.amount, SeedMerchant.name, PeerMerchant.name, SeedCity.name, PeerCity.name, __path__)
+}

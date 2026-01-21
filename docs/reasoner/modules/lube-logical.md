@@ -11,6 +11,8 @@ Transforms unresolved `Block` IR into `LogicalOperator` trees and applies logica
 - `LogicalOptimizer`: applies rule-based rewrites.
 - `operators/*`: logical operator definitions.
 
+Optimization rules live in `optimizer/rules` (e.g., `FilterPushDown`, `AggregatePushDown`, `ProjectMerge`, `ExpandIntoPure`, `PatternJoinPure`).
+
 ## Inputs and outputs
 
 - Input: `Block` plus `Catalog` and parsing context.
@@ -20,4 +22,3 @@ Transforms unresolved `Block` IR into `LogicalOperator` trees and applies logica
 
 - Used by `KGReasonerSession` during `plan` and `getResult`.
 - If you keep KGDSL and the IR, this module can be reused without changes.
-

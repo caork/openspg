@@ -11,6 +11,15 @@ Implements an in-process RDG engine and a local runner for KGDSL execution.
 - `LocalReasonerSession`: `KGReasonerSession` implementation for local execution.
 - `LocalReasonerRunner`: convenience wrapper for running KGDSL tasks.
 
+## Task wiring
+
+`LocalReasonerTask` allows you to provide:
+
+- KGDSL text or pre-planned physical operators.
+- A `Catalog` or schema connection info.
+- A graph loader class, a `GraphState` instance, or a graph state class name.
+- Runtime parameters via `ConfigKey`.
+
 ## Usage scenarios
 
 - Local testing of KGDSL.

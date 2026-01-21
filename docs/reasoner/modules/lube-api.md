@@ -12,6 +12,12 @@ Defines the IR and public APIs that connect parsing, planning, and execution.
 - **Catalog**: schema lookups and graph metadata (`catalog/*`).
 - **ParserInterface**: the parser contract implemented by KGDSL parser.
 
+Catalog-related types include:
+
+- `PropertyGraphSchema` and `SemanticPropertyGraph` for schema access.
+- `ConceptGraph` for concept hierarchy and semantic traversal.
+- `AbstractConnection` for remote schema sources.
+
 ## Key files
 
 - `block/Block.scala`
@@ -23,4 +29,3 @@ Defines the IR and public APIs that connect parsing, planning, and execution.
 - The KGDSL parser returns `Block` objects defined here.
 - The logical planner consumes these blocks and resolves them using a `Catalog`.
 - The physical planner and RDG layer rely on IR structures for execution.
-

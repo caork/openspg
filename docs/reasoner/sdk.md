@@ -26,6 +26,11 @@ To run KGDSL end to end, you need:
 - An RDG implementation and a `PropertyGraph` wrapper.
 - A `KGReasonerSession` implementation to tie them together.
 
+If you want to load data from external storage, include:
+
+- `reasoner/warehouse/warehouse-common` for graph loading configs.
+- `reasoner/warehouse/cloudext-warehouse` for Cloudext-backed graph state.
+
 ## Minimal runtime example
 
 - Use `PropertyGraphCatalog` for an in-memory schema.
@@ -37,4 +42,3 @@ To run KGDSL end to end, you need:
 - Swap the parser if you need another DSL.
 - Swap RDG and PropertyGraph for your engine.
 - Keep the planning stack unchanged unless you change the IR.
-
