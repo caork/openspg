@@ -1,0 +1,15 @@
+Define (i:Incident)-[rc:rootCause]->(c:Component) {
+  GraphStructure {
+    (i:Incident)-[t:triggeredBy]->(a:Alarm)-[on]->(c:Component)
+  }
+  Rule {
+  }
+  Action {
+    createEdgeInstance(
+      src=i,
+      dst=c,
+      type=rootCause,
+      value={}
+    )
+  }
+}

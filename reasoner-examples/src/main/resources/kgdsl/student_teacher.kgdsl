@@ -1,0 +1,8 @@
+GraphStructure {
+  (Student:Student)-[STEdge:STEdge]->(Teacher:Teacher)
+}
+Rule {
+}
+Action {
+  get(Student.name, Teacher.name, STEdge.name)
+}

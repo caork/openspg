@@ -33,6 +33,7 @@
     <module>reasoner</module>
     <module>builder</module>
     <module>cloudext</module>
+    <module>reasoner-examples</module>
   </modules>
 
   <properties>
@@ -451,6 +452,10 @@
       <artifactId>junit-jupiter</artifactId>
       <version>5.7.1</version>
       <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.google.guava</groupId>
+      <artifactId>guava</artifactId>
     </dependency>
   </dependencies>
 
