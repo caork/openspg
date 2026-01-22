@@ -1,18 +1,10 @@
-
-
 <!-- Page 1 -->
-
-
-
-
-
 
 Semantic -enhanced Programmable
 Knowledge Graph ( SPG )
 White paper （v1.0）
 —— The new generation industrial -grade knowledge
 semantic framework and engine
-
 
 Utilize SPG's domain type constraints and the fusion representation of
 facts and logic to automatically complete and increase the semantic relation s
@@ -22,13 +14,8 @@ accelerate the knowledge integration of massive enterprise data, and
 seamlessly connect AI applications through its knowledge symbolic
 representation and programmability capabilities.
 
-
-
-
 Ant Group × OpenKG  co-produced
 August 2023
-
-
 
 <!-- Page 2 -->
 
@@ -60,7 +47,6 @@ Zhejiang University: Huajun Chen, Wen Zhang
 Zhijiang Laboratory: Heng Zhang
 Institute of Computing Technology, Chinese Academy of Sciences: Long Bai
 
-
 <!-- Page 3 -->
 
 Semantic -enhanced Programmable Knowledge Graph (SPG) White paper
@@ -89,7 +75,6 @@ technology.
 —— Juanzi Li, Director and professor of the Knowledge Intelligence Research Center of the
 Institute of Artificial Intelligence of Tsinghua University
 
-
 As a symbolic knowledge representation system, the knowledge graph possesses capabilities such as
 high-order semantics, rigorous structure, and complex reasoning. In the era of rapid development of large
 language models (LLMs), there is a rich interactive relationship between knowledge graphs and LLMs. On
@@ -100,7 +85,6 @@ high-quality and interpretable knowledge representation and reasoning capabiliti
 exploration direction for addressing the idealistic cha llenges of LLMs.
 Traditional knowledge semantic frameworks like RDF/OWL and LPG have significant limitations in
 knowledge management and struggle to support the construction and application of knowledge graphs in the
-
 
 <!-- Page 4 -->
 
@@ -119,7 +103,6 @@ between different fields, and building a new generation of AI technology systems
 implementation of knowledge graph + LLMs.
 
 ——  Wenguang  Chen, President of Ant Group Technology Research Institute
-
 
 Ant Group possesses diversified business scenarios and massive  amount of domain data. The SPG
 framework has been developed based on  the extensive practical experience  of Ant Group in knowledge
@@ -140,7 +123,6 @@ development. Throughout this journey, we welcome the active participation of all
 jointly driving the development and innovation of knowledge graph technology, and realizing controllable
 AI driven by bot h LLMs  and knowledge graphs, ultimately expediting industry implementation.
 ——  Jun Zhou, Head of Machine Intelligence Department and Researcher at Ant Group.
-
 
 <!-- Page 5 -->
 
@@ -184,7 +166,6 @@ and application cases of the SPG framework. We hope that through this whitepaper
 comprehensive understanding of the SPG framework and be inspired to engage in further discussion and
 collaboration. We believe that the SPG framework will provide stronger and more flexible support for
 
-
 <!-- Page 6 -->
 
 Semantic -enhanced Programmable Knowledge Graph (SPG) White paper
@@ -196,14 +177,11 @@ Thank you!
 
 —— Haofen Wang, Lei Liang, and the SPG team
 
-
-
 <!-- Page 7 -->
 
 Semantic -enhanced Programmable Knowledge Graph (SPG) White paper
 
 # Contents
-
 
 ## Chapter 1 From Data -Driven to Knowledge -Driven: Enterprises Deepen Competitive
 
@@ -257,7 +235,6 @@ Graph................................ ................................  29
 5.5 Basic Requirements for SPG-Engine on the Property Graph Systems  ...........  64
 5.6 Advanced Requirements for SPG -Engine on the Property Graph Systems  ....... 65
 
-
 <!-- Page 8 -->
 
 Semantic -enhanced Programmable Knowledge Graph (SPG) White paper
@@ -309,7 +286,6 @@ Graph................................ ................................  89
 
 References  ................................ ...............................  103
 
-
 <!-- Page 9 -->
 
 Semantic -enhanced Programmable Knowledge Graph (SPG) White paper
@@ -348,7 +324,6 @@ relationships between data, uncover hidden values, and make informed decisions. 
 in 2021 that Data Fabric, based on Knowledge Graph technology, would become the next -generation data
 architectu re. Neo4j and Cambridge Semantic have also released whitepapers introducing a new generation
 
-
 <!-- Page 10 -->
 
 Semantic -enhanced Programmable Knowledge Graph (SPG) White paper
@@ -386,10 +361,6 @@ knowledge. To support growth manag ement and risk control, it is crucial to buil
 customers, materials, channels, and other dimensions. Taking merchants as an example, Figure 1 illustrates
 the process of constructing such multidimensional profiles.
 
-
-
-
-
 <!-- Page 11 -->
 
 Semantic -enhanced Programmable Knowledge Graph (SPG) White paper
@@ -407,7 +378,6 @@ multidimensional propagation context of events at different levels (micro, macro
 dense representation of sparse semantic relations between entities that are interpretable.
 
 Figure 2: Deep Context Semantic Expansion of  Foundational Fact Knowledge Graph
-
 
 <!-- Page 12 -->
 
@@ -428,7 +398,6 @@ with transactional users, gen erating scripted conversations to alert users and 
 applications aim to achieve more intelligent and precise risk control and business inference, enhancing the
 efficiency and value of business operations.
 
-
 Figure 3: Evolution of Knowledge Representation from Binary to Multivariate
 In the case of merchant management  and risk control, knowledge management requires strong
 contextual awareness. Common knowledge graphs, which lack the ability to perceive contextual information
@@ -440,8 +409,6 @@ has been a significant shift in the expectations of vertical industries towa rds
 representation has evolved from the binary static structure depicted in Figure 3 to multidimensional dynamic
 associations in temporal and spatial dimensions, better aligning with the requirements of real -world
 applications.
-
-
 
 <!-- Page 13 -->
 
@@ -474,7 +441,6 @@ merchant operations . (3) Risk Control: combating illicit activities is an ongoi
 requiring enhanced awareness of thin data customer groups and rapid identification of new risk patterns . (4)
 Knowledge Construction: transforming external unstructured/semi -structured and structured data into
 
-
 <!-- Page 14 -->
 
 Semantic -enhanced Programmable Knowledge Graph (SPG) White paper
@@ -500,7 +466,6 @@ knowledge querying, and other tasks. By implementing the collaborative framework
 support is provided for cross -modal knowledge alignment, log ic-guided knowledge reasoning , natural
 language knowledge querying, and more. This presents higher demands for unified representation of KG
 knowledge semantics and cross -scenario transferability of engine framework s.
-
 
 <!-- Page 15 -->
 
@@ -532,7 +497,6 @@ industry, has developed a semantic framework based on property graph called Sema
 Programmable Graph (SPG). It creatively integrates the structural nature of Labeled Property Graph (LPG)
 with the semantic nature of RDF, overcoming the challenges of industrial implementation faced by
 
-
 <!-- Page 16 -->
 
 Semantic -enhanced Programmable Knowledge Graph (SPG) White paper
@@ -563,7 +527,6 @@ providing a programmable symbolic representation to facilitate machine understa 
 
 Figure 5: SPG Knowledge Semantic Framework
 
-
 <!-- Page 17 -->
 
 Semantic -enhanced Programmable Knowledge Graph (SPG) White paper
@@ -586,8 +549,6 @@ knowledge representation and engine framework. As mentioned earlier, Labeled Pro
 become the preferred choice for most enterprise knowledge modeling due to their unique compatibility with
 big data architectures. This whitepaper also derives the semantic capabilities required for enterprise -level
 knowledge management from practical busi ness issues .
-
-
 
 <!-- Page 18 -->
 
@@ -630,7 +591,6 @@ normal users. Therefore, this chapter will provide examples using a portion of t
 5, and 6 to illustrate the problems encountered in current LPG -based  knowledge management. In the given
 example, the app  (denoted as “** Entertainment ”) should be identified as a gambling app developed by
 
-
 <!-- Page 19 -->
 
 Semantic -enhanced Programmable Knowledge Graph (SPG) White paper
@@ -656,7 +616,6 @@ In business practice, although there may not be direct associations between appl
 between different applications, indirect associations can often be discovered through intermediaries such as
 devices or certificates. Similarly, relation s between users can be explored through methods like shared
 
-
 <!-- Page 20 -->
 
 Semantic -enhanced Programmable Knowledge Graph (SPG) White paper
@@ -680,7 +639,6 @@ of rules, such as rules for determining the same user, rules for user -app owner
 developer relations. For example, if two users use the same phone number or device, they are considered to
 have a “same phone ” or “same device ” relation. If a user has a controlling relation with a legal entity, the
 app released by that legal entity is considered to be owned by that user. If a user has multiple devices that
-
 
 <!-- Page 21 -->
 
@@ -712,7 +670,6 @@ modeling, the new types and relations in Figures 7 and 8 are derived from the ex
 Figure 6. When the underlying data changes, such derived data must be synchronized, or else
 inconsistencies in the knowledge graph data will occ ur.
 
-
 <!-- Page 22 -->
 
 Semantic -enhanced Programmable Knowledge Graph (SPG) White paper
@@ -742,7 +699,6 @@ questions:
 • Whether the associated entities will further generate other impacts and how they will be affected.
 
 Figure 9: Illustration of Event Impact Propagatio
-
 
 <!-- Page 23 -->
 
@@ -780,8 +736,6 @@ events, they differ significantly in terms of impact time, scope, and other aspe
 In conclusion, due to the complexity of financial events, relying solely on a group of business experts
 to predefine events cannot fully cover real -world application scenarios. We need a system to dynamically
 generate derived financial event taxonomies.
-
-
 
 <!-- Page 24 -->
 
@@ -822,7 +776,6 @@ especially major shareholders, whose financial conditions may be affected, thus 
 influencing their investments in other companies. Additionally, Company A' s competitors may
 benefit from its bankruptcy, potentially gaining market share. Similarly, suppliers and creditors of
 
-
 <!-- Page 25 -->
 
 Semantic -enhanced Programmable Knowledge Graph (SPG) White paper
@@ -849,7 +802,6 @@ The entire iron ore industry chain starts with iron ore extraction, and Vale S.A
 participant in the global mining industry, with its operations significantly impacting global iron ore supply
 and prices. It is precisely because of the compa ny's importance in the global iron ore industry chain that the
 dam collapse incident led to a global increase in iron ore prices.
-
 
 <!-- Page 26 -->
 
@@ -890,7 +842,6 @@ is used, it is generally impossible to predefine events. It can only be tailored
 If a schema -free property  graph is used, the overly lenient mode will result in increasing data
 management and usage costs.
 
-
 <!-- Page 27 -->
 
 Semantic -enhanced Programmable Knowledge Graph (SPG) White paper
@@ -926,7 +877,6 @@ domain knowledge graph is subjective, where entities of the same type are define
 and granularity differences. Hetero geneity issues caused by different schema definitions are prevalent,
 hindering the dissemination and reuse of knowledge, and further exacerbating knowledge inconsistency.
 
-
 <!-- Page 28 -->
 
 Semantic -enhanced Programmable Knowledge Graph (SPG) White paper
@@ -935,7 +885,6 @@ different business goals
 In the application of the risk mining  knowledge graph, there is a need to classify the “Person ” entity
 and determine whether they are involved in risky  activities. The risky  personnel can be further divided into
 categories such as gambling individuals, bookmakers, money launderers, and so on, as shown in Figure 11.
-
 
 Figure 11: Entity granularity expansion in the modeling process of the risk mining knowledge graph
 Even within the same knowledge graph project, different internal demands may lead to the creation of
@@ -954,7 +903,6 @@ These issues are often strongly correlated with specific business scenarios , an
 evolves , and different scenarios arise. From the data management perspective, these apps or persons may
 use the same or similar data structures. However, from the business logic perspective, there is a need for
 semantic -level type differentiation. The mixture of schema/ontology modeling from different perspectives
-
 
 <!-- Page 29 -->
 
@@ -984,7 +932,6 @@ With M types of entities and N types of relations, due to differences in propert
 structures or data tables need to be prepared to complete the knowledge graph construction. Leading to high
 data preparation costs. As the demand for knowledge graph -based analysis increases, this cost continues to
 
-
 <!-- Page 30 -->
 
 Semantic -enhanced Programmable Knowledge Graph (SPG) White paper
@@ -1010,7 +957,6 @@ heterogeneous domain knowledge
 During the implementation of knowledge graph in the financial domain, there is a need for
 heterogeneous representations of temporal and spatial aspects, such as  user behavior, industry events, macro
 
-
 <!-- Page 31 -->
 
 Semantic -enhanced Programmable Knowledge Graph (SPG) White paper
@@ -1032,7 +978,6 @@ the application of the e nterprise causal knowledge graph as an example, the sim
 production event in a company is represented as shown in Figure 16.
 
 Figure 16: Extension of multi -element relations based on RDF -Star triples
-
 
 <!-- Page 32 -->
 
@@ -1069,7 +1014,6 @@ and logical combinations.  For example, when land prices increase, it leads to a
 The combination of “Land prices in Province A increase ” is a binary relation between an administrative
 entity and an abstract event , and should also lead to the deduction of “Fiscal revenue in Province A increases ”.
 
-
 <!-- Page 33 -->
 
 Semantic -enhanced Programmable Knowledge Graph (SPG) White paper
@@ -1099,7 +1043,6 @@ black, Company A is still marked as white. In this case, data inconsistency occu
 completion of external system calculations before updating, as shown in Figure 18c, or manua l intervention
 to address the issue. Incorrect da ta or delayed updates can result in incorrect conclusions and the knowledge
 graph being unavailable during the correction period.
-
 
 <!-- Page 34 -->
 
@@ -1133,7 +1076,6 @@ During the propagation process, the logical judgment can reference the relevant 
 preceding entitie s/relations in the current judgment condition's position. As shown in Figure 20, the “Price
 increase ” event needs to reference the industry property  of the subject in the “Vale dam collapse incident ”,
 
-
 <!-- Page 35 -->
 
 Semantic -enhanced Programmable Knowledge Graph (SPG) White paper
@@ -1163,8 +1105,6 @@ consolidation of the properties and relations . As shown in Figure 21, in the en
 graph , the construction process of the enterprise entities , involves the merging of various data sources, such
 as company announcement extraction, basic business information, and court announcements .
 
-
-
 <!-- Page 36 -->
 
 Semantic -enhanced Programmable Knowledge Graph (SPG) White paper
@@ -1187,9 +1127,7 @@ The problem of cross -graph fusion is similar to 2.5.2. When merging user entiti
 knowledge graph and the fund knowledge graph, it is necessary to determine how to preserve  the properties
 and relations in the new “FuseEntityType ”.
 
-
 Figure 22: Stable fusion and traceable update problems in cross -graph fusion
-
 
 <!-- Page 37 -->
 
@@ -1224,8 +1162,6 @@ classification systems to achieve effective linkage, induction, and deduction be
 enables automatic extraction of  static common knowledge to support efficient cross -business reuse and
 effective accumulation of core assets. The following chapter 3 and 4 will provide detailed explanations of
 the semantics -enhanced programmable framework  (SPG).
-
-
 
 <!-- Page 38 -->
 
@@ -1268,7 +1204,6 @@ of the knowledge. To achieve this , SPG Evolving provides programmable capabilit
 linking, property  standardization, and entity resolution  through SPG -Programming. Users can use
 built-in or self -developed algorithms (operators) to improve the uniqueness of instances. More
 
-
 <!-- Page 39 -->
 
 Semantic -enhanced Programmable Knowledge Graph (SPG) White paper
@@ -1310,7 +1245,6 @@ knowledge graph representation, seamless integration of data and knowledge can b
 the SPG -Reasoning component enables the construction of a machine -understandable symbolic system,
 which facili tates the linkage with deep learning models through knowledge constraints, logical symbols, etc.,
 
-
 <!-- Page 40 -->
 
 Semantic -enhanced Programmable Knowledge Graph (SPG) White paper
@@ -1338,7 +1272,6 @@ details.
 • SPG-Schema: Responsible for the design of the Schema framework that enhances the semantic
 understanding of the property graph, including subject models, evolution models, predicate
 models, etc. See Chapter 4 for more details.
-
 
 <!-- Page 41 -->
 
@@ -1371,7 +1304,6 @@ knowledge graph. Th e 1.0 version of the whitepaper will focus on the following 
 it addresses, and presents the semantic framework and schema model of SPG through two business
 cases.
 
-
 <!-- Page 42 -->
 
 Semantic -enhanced Programmable Knowledge Graph (SPG) White paper
@@ -1386,8 +1318,6 @@ such as the programmable framework and knowledge reasoning , have only been brie
 future, we will focus on these topics in separate discussions. We will also continue to explore and make
 breakthroughs in the bidirectional interaction between SPG and LLM s. The release plan for the future of
 SPG is outlined in the Chapter 11.
-
-
 
 <!-- Page 43 -->
 
@@ -1418,7 +1348,6 @@ A brief explanation of the SPG subject classification model is as follows:
 characterized by multiple properties  and relations, such as users, companies, merchants, etc.
 • Concept: Abstractions from concrete entities to general ones, representing a group of entity
 instances or event instances, forming a classification system. Concepts are relatively static and
-
 
 <!-- Page 44 -->
 
@@ -1459,7 +1388,6 @@ In addition, the event model in the enterprise causal  knowledge  graph involves
 time and space. When modeling the causality layer, it is necessary to associate simple or complex logics
 such as causality, sequence, co -occurrence, and structure. To address the inability of LPG to perfectly
 
-
 <!-- Page 45 -->
 
 Semantic -enhanced Programmable Knowledge Graph (SPG) White paper
@@ -1489,7 +1417,6 @@ or numbers. This not only fails to ensure the integrity and correctness of the p
 difficult to implement effective queries and propagation based on the structure. Leads to  the additional
 model ing for the  properties and significant data preparation costs due to the variations in property scales . As
 
-
 <!-- Page 46 -->
 
 Semantic -enhanced Programmable Knowledge Graph (SPG) White paper
@@ -1509,14 +1436,12 @@ expanded 5 -category classification model , SPG -Schema introduces a series of s
 constrain LPG, enabling more syntax and semantics.  The specific semantic syntax hierarchy diagram can be
 seen in Figure 27.
 
-
 Figure 27: SPG -Schema Syntax and Semantic Hierarchy Diagram
 • Syntax Layer: In this layer, the syntax content of SPG -Schema is defined. The related syntax used
 for semantic reasoning in SPG -Schema can be divided into five categories: minimal constraint set
 (ρdf), binary constraints (BC), multiple constraints (MC), relation group constraints, and dynamic
 types. These can be applied to SPG -Schema in the form of Keywords and built -in Predicates from
 the standard namespace std, depending on the usage scenario.
-
 
 <!-- Page 47 -->
 
@@ -1538,8 +1463,6 @@ Figure 28: The Four -Layer Architecture  of SPG-Schema
 Based on the above summary , combined with the risk mining knowledge  graph and the enterprise causal
 knowledge graph as the basic scenario s, the overall four -layer architecture of SPG -Schema is shown in
 Figure 29.
-
-
 
 <!-- Page 48 -->
 
@@ -1566,7 +1489,6 @@ categories: NodeType, EdgeType, and GraphType, which correspond to the definitio
 edges (Edge), and views in LPG. The basic definition of the semantics is locate d in the SPG Meta Model
 layer, and it adds more related semantics to the Meta Model layer by classifying the LPG node types more
 finely.
-
 
 <!-- Page 49 -->
 
@@ -1609,7 +1531,6 @@ OPTIONAL phoneNum std.PhoneNum,   // Optional field to add phone number with sta
 OPTIONAL SINGLETON taxonomy RiskPerson,  // Optional concept classification property
 OPEN
 });
-
 
 <!-- Page 50 -->
 
@@ -1654,7 +1575,6 @@ business inference .
 // Definition of the concept of company classification
 CREATE CONCEPT TYPE (CompanyTaxonomy {
 
-
 <!-- Page 51 -->
 
 Semantic -enhanced Programmable Knowledge Graph (SPG) White paper
@@ -1695,7 +1615,6 @@ CREATE EDGE TYPE
 (Person) -[holdShares {percent DOUBLE}] ->(LegalPerson);
 In many cases, users may not want to use the triple representation when using the relation. Therefore,
 we can set relation aliases to directly refer to a triple relation. There are two ways to set aliases: direct
-
 
 <!-- Page 52 -->
 
@@ -1741,7 +1660,6 @@ In order to manage the minimal predicate  set and expand the set of built -in pr
 a namespace mechanism is used, similar to RDF. This mechanism has already been used when using standard
 types. By introducing the “std” namespace, built -in predicates can be categorized, ensuring that the existing
 
-
 <!-- Page 53 -->
 
 Semantic -enhanced Programmable Knowledge Graph (SPG) White paper
@@ -1780,7 +1698,6 @@ the same, and when the name is the same but the type is different. We consider b
 errors and they will not be processed.
 2. Domain and Range  of the Relations
 
-
 <!-- Page 54 -->
 
 Semantic -enhanced Programmable Knowledge Graph (SPG) White paper
@@ -1814,19 +1731,20 @@ reflexive, symmetric, and transitive relations using the keywords “REFLEXIVE �
 CREATE EDGE TYPE REFLEXIVE (Class1) -[ edgeA { prop STRING }] ->(Class1);
 // This means that
 (a:Class1) -[p:edgeA] ->(a:Class1)
---------------------------------
+----------------------------------
+
 // Definition of symmetric relation edgeB
 CREATE EDGE TYPE SYMMETRIC (Class1) -[ edgeB { prop STRING }] ->(Class2);
 // This means that
 (a:Class1) -[p:edgeB] ->(b:Class2) ,
--------------------------------
+------------------------------------
+
 (b:Class2) -[p:edgeB] ->(a:Class1)
 // Definition of transitive relation edgeC
 CREATE EDGE TYPE TRANSITIVE (Class1) -[ edgeC { prop STRING }] ->(Class1);
 // This means that
 (a:Class1) -[p1:edgeC] ->(b:Class1),
 (b:Class1) -[p2:edgeC] ->(c:Class1)
-
 
 <!-- Page 55 -->
 
@@ -1838,13 +1756,13 @@ order to achieve semantic completeness, we have also added functional and invers
 on the OWL syntax. These relations are def ined using the keywords “FUNCTIONAL ” and
 “INVERSE_FUNCTIONAL ” respectively. The definitions are as follows:
 
-
 // Definition of functional relation edgeD
 CREATE EDGE TYPE FUNCTIONAL (Class1) -[ edgeD { prop STRING }] ->(Class2);
 // This means that
 (a:Class1) -[p:edgeD] ->(b:Class2),
 (a:Class1) -[p:edgeD] ->(c:Class2)
--------------------------------
+----------------------------------
+
 (b:Class2) = (c:Class2)
 
 // Definition of inverse functional relation  edgeE.
@@ -1852,7 +1770,8 @@ CREATE EDGE TYPE INVERSE_FUNCTIONAL (Class1) -[ edgeE { prop STRING }] ->(Class2
 //  This means that
 (b:Class2) -[p:edgeE] ->(a:Class1),
 (c:Class2) -[p:edgeE] ->(a:Class1)
--------------------------------
+----------------------------------
+
 (b:Class2) = (c:Class2)
 4.3.3 Multiple Binary Relation Constraints (Multiple Constraints, MC)
 To enhance the semantic reasoning capabilities of SPG -Schema, additional support for MC predicates
@@ -1870,7 +1789,6 @@ relation can be defined as the inverseOf the “subordinate ” relation. During
 the "superior" relation to automatically infer the “subordinate ” relation, thereby solving industrial problems
 arising from complex semantic reasoning. In the example mentioned,  “(Class1) -[Pred1] ->(Class2) ” and
 “(Class2) -[Pred2] ->(Class1) ” form a pair of inverse  relations.
-
 
 <!-- Page 56 -->
 
@@ -1914,7 +1832,6 @@ CREATE EDGE TYPE (Person) -[conjugality] ->(Person) AS <conjugality>;
 
 // Definition of relation grouping
 
-
 <!-- Page 57 -->
 
 Semantic -enhanced Programmable Knowledge Graph (SPG) White paper
@@ -1956,7 +1873,6 @@ OPEN
 
 // Definition of City Classification Concept
 CREATE CONCEPT TYPE (CityTaxonomy {
-
 
 <!-- Page 58 -->
 
@@ -2001,7 +1917,6 @@ association indicating that the “User” entity type belongs to the “RiskPer
 // Definition of Company Operation Event
 CREATE EVENT TYPE (CompanyEvent {
 
-
 <!-- Page 59 -->
 
 Semantic -enhanced Programmable Knowledge Graph (SPG) White paper
@@ -2027,7 +1942,8 @@ SET REL <CompanyOperationTaxonomy> -[std.leadTo] -><CompanyOperationTaxonomy>;
 event concept leading to an instance of stock price fall event
 <a:EscapeEvent> -[std.belongTo] -><EscapeEvent:CompanyOperationTaxonomy>;
 <EscapeEvent:CompanyOperationTaxonomy> -[std.leadTo] -><FallInStock:CompanyOperationTaxonomy>
------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------
+
 // Automatically generate an instance "b" of FallInStock event, associated with the stock price fall event of company A
 <b:FallInStock> -[std.belongTo] -><FallInStock:CompanyOperationTaxonomy>;
 The relation defined by “std.leadTo ” represents an association at the modeling level but applies to event
@@ -2043,7 +1959,6 @@ introduce the syntax for rule definitions and provide relevant examples for refe
 4.4.1 The Self -defined  Relation /Property  Rules
 The Self -defined  relation /property rules are common requirements in business scenarios, where a
 specific relation is generated only when certain conditions are met. To accommodate rule definitions, we
-
 
 <!-- Page 60 -->
 
@@ -2088,7 +2003,6 @@ basic relation,  “<effect_owned_by> ”, is defined. Through inverse relation 
 owns certificate ” relation will only be established when the condition of the certificate still being valid is
 met, and it is annotated with the alias  “<has> ”.
 
-
 <!-- Page 61 -->
 
 Semantic -enhanced Programmable Knowledge Graph (SPG) White paper
@@ -2129,7 +2043,6 @@ global consistency validation, which can be applied to the knowledge graph produ
 the official description of PG -Schemas, the relationship between SPG and PG -Schemas can be illustrated as
 shown in Figure 30.
 
-
 <!-- Page 62 -->
 
 Semantic -enhanced Programmable Knowledge Graph (SPG) White paper
@@ -2146,8 +2059,6 @@ are also described f or the expanded classification model. In future versions, t
 proof of the semantic completeness of the current syntax, in order to form a user -friendly and complete
 syntax and semantic system. More detailed introductions to pr edicate logic semantics and syntax will be
 published in the form of serialized articles on the SPG technical community and public platform.
-
-
 
 <!-- Page 63 -->
 
@@ -2179,8 +2090,6 @@ an OLAP graph computing system.
 In conjunction with the architecture diagram shown in Figure 24, the detailed functions of each module
 in the SPG Engine are shown in Figure 31.
 
-
-
 <!-- Page 64 -->
 
 Semantic -enhanced Programmable Knowledge Graph (SPG) White paper
@@ -2208,7 +2117,6 @@ evaluations to meet user expectations.
 5.2 SPG2LPG Translator
 The SPG -Schema chapter describes the relationship between SPG -Schema and LPG -Schema, as shown
 in Figure 29 in Chapter 4. SPG adds semantic predicates, type extensions, logical rules, etc., on top of LPG.
-
 
 <!-- Page 65 -->
 
@@ -2238,7 +2146,6 @@ In SPG Schema, entity types/concept types support inheritance, and relation s su
 These definitions need to be translated. Examples are provided in Figure 33 and Figure 34.
 1. Semantic Translation of Entity Types
 
-
 <!-- Page 66 -->
 
 Semantic -enhanced Programmable Knowledge Graph (SPG) White paper
@@ -2248,7 +2155,6 @@ subclass. It is important to note that the property  names of the parent class a
 as this is a constraint of subClassOf. Additionally, all top -level parent classes of entity types inherit from the
 root type “Thing ”. The “Thing ” type includes three basic properties : primary key ID, entity name, and
 description.
-
 
 Figure 32: Illustration of the subClassOf Semantic
 2. Conversion of Property Types to Entity Types/Concept Types
@@ -2262,7 +2168,6 @@ name matching the property name.
 of the relation.
 
 Figure 33: Lossless Redundant Adaptation Process from SPG Semantic Properties to LPG
-
 
 <!-- Page 67 -->
 
@@ -2296,10 +2201,6 @@ with the ID of the property  value.
 standard type entity with the ID equal to the property  value is created, and a new relation  is
 generated from the current entity to the entity generated in the previous step.
 
-
-
-
-
 <!-- Page 68 -->
 
 Semantic -enhanced Programmable Knowledge Graph (SPG) White paper
@@ -2324,7 +2225,6 @@ executed in pos t-order traversal. To achieve the above goals, the entire SPG2LP
 three parts, each with the following functions:
 • RDG Operator Impl: This layer implements the RDG operators based on the underlying LPG
 engine. It includes the functionality defined by each operator, such as Pattern Match, Filter, etc.
-
 
 <!-- Page 69 -->
 
@@ -2359,24 +2259,15 @@ In the explanation of the execution plan in section (1), we discussed the order 
 operators. This section primarily introduces the definition of operators in RDG. The table below provides a
 list of operators.
 
-
-
-
-
-
-
-
-
 <!-- Page 70 -->
 
 Semantic -enhanced Programmable Knowledge Graph (SPG) White paper
 62 Table 8: RDG Operator List
 
-
 3. Generating Executable Code
-RDG operators represent atomic operations. To convert the RDG operator tree into executable code for
-the underlying engine, it is necessary to combine it with the execution plan tree generated by the Execution
-Plan Generator. This process is illustrated in Figure 36.
+   RDG operators represent atomic operations. To convert the RDG operator tree into executable code for
+   the underlying engine, it is necessary to combine it with the execution plan tree generated by the Execution
+   Plan Generator. This process is illustrated in Figure 36.
 
 Figure 36: Executable Code Generation Process Flow
 The Compiler generates executable code from the Physical Plan and RDG operators. The pseudocode
@@ -2393,7 +2284,6 @@ implicit def context: PhysicalPlannerContext[T] = children.head.context
 * @return
 */
 def RDG : T = children.head. RDG
-
 
 <!-- Page 71 -->
 
@@ -2430,7 +2320,6 @@ to perform queries and modifications on the target.
 For Scenario 2, the generated code from section 4.3 can be packaged as a plugin and submitted to the
 LPG engine. This process is illustrated in Figure 3 7.
 
-
 <!-- Page 72 -->
 
 Semantic -enhanced Programmable Knowledge Graph (SPG) White paper
@@ -2456,7 +2345,6 @@ as well. The implementation should conform to the interface specifications descr
 
 Figure 38: Architecture Diagram for a Single HTAP System and Different TP/AP Systems Integration
 
-
 <!-- Page 73 -->
 
 Semantic -enhanced Programmable Knowledge Graph (SPG) White paper
@@ -2481,7 +2369,6 @@ based on business logic. Support mapping from entity to entity, from property to
 property to property, and allow querying directly on logical gra phs using GQL/Cypher.
 • Mapping and conversion of entity/relation types across graphs: Support querying across multiple
 graphs (including physical and logical graphs) .
-
 
 <!-- Page 74 -->
 
@@ -2518,13 +2405,11 @@ create (n:Device {id:"  devid****001 "})
 // Trigger server -side constraint checking, create corresponding relation  if constraints are met
 match (n:Device {id:"  devid****001 "})--[:has_wifi] ->(W:WIFI)< -[:has_wifi] -(o:Device) create (n) -[:same_wifi] ->(o)
 
-
 // Define property type and add property constraint, when modify property  of App, modify corresponding property  of
 instances  that meet the constraint rules
 match (n:App {id:" appid*****0012 "}) set n.mark = "black"
 // Trigger server -side constraint checking, modify corresponding property of instances  if constraints are met
 match (n:App {id:"  appid*****0012 "})<-[:release] -(m:Company ) set m.mark = "black"
-
 
 <!-- Page 75 -->
 
@@ -2560,7 +2445,6 @@ property graph systems. It also provided optimization directions for the propert
 the performance of SPG. More details and implementation examples of RDG will be continuously published
 in articles on the SPG official account.
 
-
 <!-- Page 76 -->
 
 Semantic -enhanced Programmable Knowledge Graph (SPG) White paper
@@ -2589,7 +2473,6 @@ runtime.  (3) SPG-Builder: It provides a runtime engine for knowledge constructi
 knowledge in SPG.  (4) SPG-Query: It provides a runtime engine for knowledge querying, implementing
 interfaces related to querying and graph -based data mining and analysis in SPG.  (5) SPG-Reasoner: It
 provides a runtime engine for knowledge inference calculation, implementing various inference capabilities
-
 
 <!-- Page 77 -->
 
@@ -2630,7 +2513,6 @@ execution. During the task execution process, SPG provides a microservice invoca
 scheduling engine to enable service invocation and task execution. Additionally, the SPG -Controller
 provides storage capabilities to store crucial information during task execution, including log data,
 
-
 <!-- Page 78 -->
 
 Semantic -enhanced Programmable Knowledge Graph (SPG) White paper
@@ -2670,7 +2552,6 @@ HITS, degree centrality, betweenness centrality, closeness centrality, etc., whi
 weight of each node in the risk mining knowledge  graph.  (3) Other Algorithms: such as triangle countin g,
 which can be used to calculate the frequency of a specific transaction subgraph in the  risk mining knowledge
 
-
 <!-- Page 79 -->
 
 Semantic -enhanced Programmable Knowledge Graph (SPG) White paper
@@ -2708,7 +2589,6 @@ schedules them during the task execution. To achieve the task scheduling, a task
 used to manage jobs scheduled precisely to the hour, minute, and second, and the concurrency level can be
 set by dynamically configuring shard parameters. To enable microservice invocation, a microservice
 
-
 <!-- Page 80 -->
 
 Semantic -enhanced Programmable Knowledge Graph (SPG) White paper
@@ -2723,7 +2603,6 @@ knowledge graphs from unstructured and multimodal data, representation learning 
 composite indexing. Additionally, other types of tasks will be integrated, such as integrating ext ernal plugin
 systems and instruction systems. Furthermore, future versions will enhance the management functionalities
 of SPG -Controller, including unified authentication management and exception handling.
-
 
 <!-- Page 81 -->
 
@@ -2747,7 +2626,6 @@ The main capability of the programmable sub -module is to provide users with a p
 interactive interface, supporting algorithm/business engineers to model, construct , and reason  for the domain
 knowledge graph s according to the programming framework provided by SPG , and supporting the
 continuous iteration of the domain knowledge graph s.
-
 
 <!-- Page 82 -->
 
@@ -2775,7 +2653,6 @@ of preparing raw data. Operators are only related to target entities, concept ty
 greatly reducing the cost of redundant development. With the introduction of standardized property  elements,
 the types of properties  in schema modeling transition from text (Text), integer (Long), and float (Double) to
 the domain model modeling.
-
 
 <!-- Page 83 -->
 
@@ -2806,6 +2683,7 @@ or Normalize Function can be specified for each type, facilitating the continuou
 graph and addressing the issues of continuous construction and evolution of incomplete data and instance
 resolution  in industrial applications. A simple example of the operator definition in pseudo -code is shown
 below, which can be bound to specific types using “bind_to ”:
+
 # -*- coding: utf -8 -*-
 
 from knext.api import EntityLinkOp
@@ -2822,7 +2700,6 @@ result = admin Norm(property)
 except Exception as e:
 errors.append(f"property :{property}, error_msg:{e.__repr__()}")
 return EvalResult(result, traces, errors)
-
 
 <!-- Page 84 -->
 
@@ -2852,12 +2729,11 @@ properties/relations. Additionally, complex end -to-end rule decisions can be de
 example of KGDSL decision is provided below:
 Structure  {
 (s:User)
-(e1:TradeEvent) -[ps1: std.subject ]->(su1:User)
-(e1:TradeEvent) -[pp1: std.object ]->(sp1:PID)
-(e2:TradeEvent) -[ps2:  std.subject ]->(su2:User)
-(e2:TradeEvent) -[pp2:  std.object ]->(sp2:PID)
+(e1:TradeEvent) -[ps1: std.subject]->(su1:User)
+(e1:TradeEvent) -[pp1: std.object]->(sp1:PID)
+(e2:TradeEvent) -[ps2:  std.subject]->(su2:User)
+(e2:TradeEvent) -[pp2:  std.object]->(sp2:PID)
 (su1) -[has] ->(sp2)
-
 
 <!-- Page 85 -->
 
@@ -2893,14 +2769,15 @@ in the SPG large -scale dynamic heterogeneous paradigm.  (2) Structure extractio
 aware reasoning tasks such as symbol rule -guided graph learning and rule mining.  (3) Feature computation:
 This mainly involves extracting subgraph features such as PageRank and degree centrality that can be
 
-
 <!-- Page 86 -->
 
 Semantic -enhanced Programmable Knowledge Graph (SPG) White paper
 78 computed from the complex graph structure.  The following pseudo -code represents the concept of multi -
 hop subgraph sampling in GCN algorithms. It demonstrates the efficient reading of the knowledge graph
 data using Python sampling operators:
+
 # -*- coding: utf -8 -*-
+
 import libkg_client
 from kgrl.conf import KgrlConstants # noqa
 from kgrl.data import KGExpression # noqa
@@ -2939,8 +2816,6 @@ This chapter provides a summary introduction to the layered abstraction of the S
 framework. The complete programmable framework is expected to be released in detail in the “SPG
 Semantic -enhanced Programmable Knowledge Graph Framework ” whitepaper 2.0.
 
-
-
 <!-- Page 87 -->
 
 Semantic -enhanced Programmable Knowledge Graph (SPG) White paper
@@ -2977,7 +2852,6 @@ Business Understanding and Schema Design: The design and implementation of the k
 graph schema require a deep understanding and abstraction of the knowledge in the domain. It also needs to
 consider the quality and accessibility of the data sources, as well as the requirements and limitation s of the
 
-
 <!-- Page 88 -->
 
 Semantic -enhanced Programmable Knowledge Graph (SPG) White paper
@@ -3001,8 +2875,6 @@ on the natural language annotations in the schema and the manual ly curated  exa
 manually curated  example s or the use of LLM -generated extraction examples can help with few -shot
 learning to improve the accuracy of LLM extraction.
 
-
-
 <!-- Page 89 -->
 
 Semantic -enhanced Programmable Knowledge Graph (SPG) White paper
@@ -3020,7 +2892,6 @@ natural language annotations. This is strongly related to the specification of t
 natural language annotations in the schema, aiding in their transformation into prompts for LLM  extraction
 and interaction. There should be three levels of content in this regard:
 • Natural language annotations for the entity types, relation types, and property  types .
-
 
 <!-- Page 90 -->
 
@@ -3060,7 +2931,6 @@ results. In dialogue systems, knowledge graphs provide a source of contextual kn
 conversations more in telligent and human -like. The LLM  handles natural language interaction, while the
 knowledge graph supplements relevant knowledge, enabling the robot to have stronger contextual awareness.
 
-
 <!-- Page 91 -->
 
 Semantic -enhanced Programmable Knowledge Graph (SPG) White paper
@@ -3084,9 +2954,6 @@ This chapter provides a summary introduction to the basic principles and framewo
 layer. It also introduces the concept of “knowledge completion ”. The future release of the “Semantic -
 enhanced  Programmable Knowledge Graph Framework (SPG)” whitepaper is expected to focus on
 providing a comprehensive overview of the SPG -LLM layer.
-
-
-
 
 <!-- Page 92 -->
 
@@ -3116,7 +2983,6 @@ example is shown in Figure 49.
 
 Figure 49: Combination of Concepts
 
-
 <!-- Page 93 -->
 
 Semantic -enhanced Programmable Knowledge Graph (SPG) White paper
@@ -3144,7 +3010,6 @@ level.  In this example, the following causal relations have been defined in the
 a “major production accident ” in a company leads to either an “increase in iron ore prices ” or a “decrease in
 steel net profit ” in the industry chain to which the company belongs. When the Brazilian dam collapse
 incident occurs and is classified as a “major production accident ” concept, the event inference transitions
-
 
 <!-- Page 94 -->
 
@@ -3177,7 +3042,7 @@ SPG expresses conceptual classification logic using  the logical constraints. Ta
 incident as an example, the following rules can be defined to classify this event:
 Define (s:FinancialEvent) -[p:belongTo] ->(o:`FinancialEventTaxonomy/ MajorIndustrialAccidents `) {
 Structure {
-(s)-[:std.subject ]->(company:Company) // Associated company instances
+(s)-[:std.subject]->(company:Company) // Associated company instances
 }
 Constraint  {
 R1(" Subject experienced a Industrial  accident "): s.behavior == ' Industrial  accident '
@@ -3187,7 +3052,6 @@ R2(" Subject company has a market share exceeding x% with significant impact "):
 The above rules can be interpreted as follows: when a safety accident occurs and the market share of
 the company exceeds x%, then the event is classified as a major production accident in the corresponding
 
-
 <!-- Page 95 -->
 
 Semantic -enhanced Programmable Knowledge Graph (SPG) White paper
@@ -3196,7 +3060,7 @@ occurs, it will generate and activate another event “e2”.
 Define (s:`FinancialEventTaxonomy/ MajorIndustrialAccidents `)-[p:leadTo] ->(o:`IndustryChain EventTaxonomy/
 priceIncrease  `) {
 Structure {
-(s)-[:std.subject ]->(company:Company) -[:industry] ->[I:Industry)
+(s)-[:std.subject]->(company:Company) -[:industry] ->[I:Industry)
 }
 Constraint  {
 }
@@ -3235,7 +3099,6 @@ Constraint  {
 o = callForMarketShares(s.id, 'marketShare')
 }
 }
-
 
 <!-- Page 96 -->
 
@@ -3277,7 +3140,6 @@ The event subject, occurrence time, location of each sub -event composing the fa
 the factual associations, semantic associations, spatiotemporal co -occurrence or succession relations
 between these elements, provide the basis for the e stablishment and attribution traceability of the relations
 
-
 <!-- Page 97 -->
 
 Semantic -enhanced Programmable Knowledge Graph (SPG) White paper
@@ -3306,8 +3168,6 @@ graph, automobile companies with profit decline risks can be discovered.
 Causal Knowledge Graph
 Table 13: Comparison of capabilities between SPG and LPG in the context of enterprise  causal knowledge
 graph
-
-
 
 <!-- Page 98 -->
 
@@ -3352,8 +3212,6 @@ hasCert std.Cert,                         //Using standard property here
 hasDevice std.Device                 //Using standard property here
 });
 
-
-
 <!-- Page 99 -->
 
 Semantic -enhanced Programmable Knowledge Graph (SPG) White paper
@@ -3385,7 +3243,6 @@ relation, two stages need to be defined: entity linking and entity resolution . 
 actual fusion instances, which greatly reduces  computation and storage costs.
 1) Entity linking: This stage primarily defines how the instances of “UserAccount ” and “Person ” are
 corresponded using the entity linking operators. It can be a one -to-one correspondence or a many -to-one
-
 
 <!-- Page 100 -->
 
@@ -3428,8 +3285,6 @@ Constraint  {   }
 The complex corporate control relations can also be defined through transitiv e, as shown in Figure 52,
 where the textual structure of the instance is represented as: Type/ Property Name = Property Value.
 
-
-
 <!-- Page 101 -->
 
 Semantic -enhanced Programmable Knowledge Graph (SPG) White paper
@@ -3447,7 +3302,7 @@ real_rate(" The actual holding proportion ") = group(s,o).sum(p1.shares*p2.share
 p.shares = real_rate   // assigning the actual shares
 }
 }
-Define (s: Person )-[p: indirect Holding ]->(o:Company ) {
+Define (s: Person )-[p: indirect Holding]->(o:Company ) {
 Structure {
 (s)-[p1:holdShares] ->(c:Company )-[p2:holdShares] ->(o)    // Indirect control of company o through company c
 }
@@ -3463,9 +3318,6 @@ In traditional LPG models, data and schema are tightly coupled. If there are cha
 the schema needs to be modified accordingly, resulting in high costs. However, SPG provides dynamic
 classification capabilities based on concepts, allowin g for business extensions at the conceptual level, as
 shown in Figure 53.
-
-
-
 
 <!-- Page 102 -->
 
@@ -3503,7 +3355,6 @@ MATCH
 (a:App)-[:developer|boss] ->(u:Person )
 WHERE
 a.id = ' gambling application 1'
-
 
 <!-- Page 103 -->
 
@@ -3543,8 +3394,6 @@ In this example, the graphical form generated by logical rule definitions can be
 algorithms for training. This approach decouples neural and symbolic methods through the form of a graph,
 ensuring scalability and flexibility.
 
-
-
 <!-- Page 104 -->
 
 Semantic -enhanced Programmable Knowledge Graph (SPG) White paper
@@ -3567,7 +3416,6 @@ timely and effective conclusions, which complements the limitations of LPG in ca
 applications. In the risk  mining knowledge  graph, SPG primarily addresses the issues of user usage costs
 and efficiency, solving problems such as the difficulty of ensuring data consistency, high evolution costs,
 and high comprehension costs  in practical applications of LPG .
-
 
 <!-- Page 105 -->
 
@@ -3608,7 +3456,6 @@ in the co -conduction of concepts and instances and the deductive reasoning from
 instances. This requires cont inuous optimization through the application and refinement of various
 causal knowledge graphs.
 
-
 <!-- Page 106 -->
 
 Semantic -enhanced Programmable Knowledge Graph (SPG) White paper
@@ -3638,7 +3485,6 @@ users' perception of semantics.
 
 Figure 5 5: SWOT Analysis of SPG
 
-
 <!-- Page 107 -->
 
 Semantic -enhanced Programmable Knowledge Graph (SPG) White paper
@@ -3646,14 +3492,12 @@ Semantic -enhanced Programmable Knowledge Graph (SPG) White paper
 Table 15: Fundamental Problems of Knowledge Management Based on LPG and the Resolution Status by
 SPG
 
-
 It is important to note that Table 15 primarily lists the fundamental problems of knowledge management
 based on LPG  and the resolution status by SPG. It mainly focuses on the semantic aspects of entities and
 logical predicate semantics. The programmable framework and complex knowledge reasoning  are built upon
 a knowledge management framework in a virtuous cycle . They are not included in the basic capabilities of
 knowledge management and are not listed in this table. However, they will be further described i n the future
 release plan in Chapter 11.
-
 
 <!-- Page 108 -->
 
@@ -3695,7 +3539,6 @@ reduced, accelerating data knowledgeization and providing additional domain know
 generation based on  LLMs . The construction of massive common -sense domain knowledge bases can also
 accelerate the progress of general artificial intelligence.  Realizing the integration and complementarity of
 
-
 <!-- Page 109 -->
 
 Semantic -enhanced Programmable Knowledge Graph (SPG) White paper
@@ -3725,7 +3568,6 @@ LLM paradigm. We will continue to improve the expressive capabilities of SPG thr
 and enhance LLM through SPG to achieve alignment with objective facts, effectivel y avoiding/reducing
 model hallucinations. At the same time, LLM will also enhance SPG to improve the conversio n efficiency
 
-
 <!-- Page 110 -->
 
 Semantic -enhanced Programmable Knowledge Graph (SPG) White paper
@@ -3737,8 +3579,6 @@ In the future, we will continue to upgrade SPG. Table 16 represents our planned 
 the release timeline will be updated on the SPG official account: “Semantic -Enhanced Programmable
 Knowledge Graph Framework ”. We welcome your attention and interaction, and together, we can explore
 the industrial -grade knowledge graph architecture paradigm.
-
-
 
 <!-- Page 111 -->
 
@@ -3804,9 +3644,7 @@ https://openreview.net/forum?id=7UrHaeZ5Ie7
 [27] Xu J , Zhang Z , Friedman T ,et al.A Semantic Loss Function for Deep Learning with Symbolic
 Knowledge[J].  2017.DOI:10.48550/arXiv.1711.11157.
 
-
 <!-- Page 112 -->
-
 Semantic -enhanced Programmable Knowledge Graph (SPG) White paper
 104 [28] Zhang Y, Chen X, Yang Y, et al. Efficient Probabilistic Logic Reasoning with Graph Neural
-Networks[J]. arXiv preprint arXiv:2001.11850, 2020.
+Networks[J]. arXiv preprint arXiv:2001.11850, 20-->

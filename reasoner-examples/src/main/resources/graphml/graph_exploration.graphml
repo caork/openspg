@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<graphml xmlns="http://graphml.graphdrawing.org/xmlns">
+  <key id="n_label" for="node" attr.name="label" attr.type="string"/>
+  <key id="n_name" for="node" attr.name="name" attr.type="string"/>
+  <key id="n_risk" for="node" attr.name="riskLevel" attr.type="string"/>
+  <key id="n_type" for="node" attr.name="type" attr.type="string"/>
+  <key id="n_ip" for="node" attr.name="ip" attr.type="string"/>
+  <key id="n_amount" for="node" attr.name="amount" attr.type="int"/>
+  <key id="n_channel" for="node" attr.name="channel" attr.type="string"/>
+  <key id="n_category" for="node" attr.name="category" attr.type="string"/>
+  <key id="e_label" for="edge" attr.name="label" attr.type="string"/>
+  <graph id="G" edgedefault="directed">
+    <node id="ACC-1">
+      <data key="n_label">Account</data>
+      <data key="n_name">acct-1</data>
+      <data key="n_risk">HIGH</data>
+    </node>
+    <node id="ACC-2">
+      <data key="n_label">Account</data>
+      <data key="n_name">acct-2</data>
+      <data key="n_risk">HIGH</data>
+    </node>
+    <node id="ACC-3">
+      <data key="n_label">Account</data>
+      <data key="n_name">acct-3</data>
+      <data key="n_risk">MEDIUM</data>
+    </node>
+    <node id="ACC-4">
+      <data key="n_label">Account</data>
+      <data key="n_name">acct-4</data>
+      <data key="n_risk">LOW</data>
+    </node>
+    <node id="ACC-5">
+      <data key="n_label">Account</data>
+      <data key="n_name">acct-5</data>
+      <data key="n_risk">LOW</data>
+    </node>
+    <node id="P-1">
+      <data key="n_label">Person</data>
+      <data key="n_name">Alice</data>
+    </node>
+    <node id="P-2">
+      <data key="n_label">Person</data>
+      <data key="n_name">Bob</data>
+    </node>
+    <node id="DEV-1">
+      <data key="n_label">Device</data>
+      <data key="n_type">MOBILE</data>
+    </node>
+    <node id="DEV-2">
+      <data key="n_label">Device</data>
+      <data key="n_type">WEB</data>
+    </node>
+    <node id="DEV-3">
+      <data key="n_label">Device</data>
+      <data key="n_type">MOBILE</data>
+    </node>
+    <node id="IP-1">
+      <data key="n_label">Ip</data>
+      <data key="n_ip">10.0.0.1</data>
+    </node>
+    <node id="IP-2">
+      <data key="n_label">Ip</data>
+      <data key="n_ip">10.0.0.2</data>
+    </node>
+    <node id="TX-1">
+      <data key="n_label">Transaction</data>
+      <data key="n_amount">900</data>
+      <data key="n_channel">POS</data>
+    </node>
+    <node id="TX-2">
+      <data key="n_label">Transaction</data>
+      <data key="n_amount">1200</data>
+      <data key="n_channel">WEB</data>
+    </node>
+    <node id="TX-3">
+      <data key="n_label">Transaction</data>
+      <data key="n_amount">5000</data>
+      <data key="n_channel">APP</data>
+    </node>
+    <node id="TX-4">
+      <data key="n_label">Transaction</data>
+      <data key="n_amount">300</data>
+      <data key="n_channel">POS</data>
+    </node>
+    <node id="M-1">
+      <data key="n_label">Merchant</data>
+      <data key="n_name">GrocerOne</data>
+      <data key="n_category">GROCERY</data>
+    </node>
+    <node id="M-2">
+      <data key="n_label">Merchant</data>
+      <data key="n_name">GameHub</data>
+      <data key="n_category">GAMING</data>
+    </node>
+    <node id="CITY-1">
+      <data key="n_label">City</data>
+      <data key="n_name">Hangzhou</data>
+    </node>
+    <node id="CITY-2">
+      <data key="n_label">City</data>
+      <data key="n_name">Singapore</data>
+    </node>
+
+    <edge id="e1" source="ACC-1" target="P-1">
+      <data key="e_label">ownedBy</data>
+    </edge>
+    <edge id="e2" source="ACC-2" target="P-2">
+      <data key="e_label">ownedBy</data>
+    </edge>
+    <edge id="e3" source="ACC-1" target="DEV-1">
+      <data key="e_label">loginWith</data>
+    </edge>
+    <edge id="e4" source="ACC-2" target="DEV-1">
+      <data key="e_label">loginWith</data>
+    </edge>
+    <edge id="e5" source="ACC-3" target="DEV-2">
+      <data key="e_label">loginWith</data>
+    </edge>
+    <edge id="e6" source="ACC-4" target="DEV-3">
+      <data key="e_label">loginWith</data>
+    </edge>
+    <edge id="e7" source="DEV-1" target="IP-1">
+      <data key="e_label">bindIp</data>
+    </edge>
+    <edge id="e8" source="DEV-2" target="IP-2">
+      <data key="e_label">bindIp</data>
+    </edge>
+    <edge id="e9" source="DEV-3" target="IP-1">
+      <data key="e_label">bindIp</data>
+    </edge>
+    <edge id="e10" source="ACC-1" target="ACC-3">
+      <data key="e_label">transfer</data>
+    </edge>
+    <edge id="e11" source="ACC-3" target="ACC-4">
+      <data key="e_label">transfer</data>
+    </edge>
+    <edge id="e12" source="ACC-2" target="ACC-3">
+      <data key="e_label">transfer</data>
+    </edge>
+    <edge id="e13" source="ACC-4" target="ACC-5">
+      <data key="e_label">transfer</data>
+    </edge>
+    <edge id="e14" source="ACC-1" target="TX-1">
+      <data key="e_label">makeTxn</data>
+    </edge>
+    <edge id="e15" source="ACC-2" target="TX-2">
+      <data key="e_label">makeTxn</data>
+    </edge>
+    <edge id="e16" source="ACC-3" target="TX-3">
+      <data key="e_label">makeTxn</data>
+    </edge>
+    <edge id="e17" source="ACC-4" target="TX-4">
+      <data key="e_label">makeTxn</data>
+    </edge>
+    <edge id="e18" source="TX-1" target="M-1">
+      <data key="e_label">toMerchant</data>
+    </edge>
+    <edge id="e19" source="TX-2" target="M-2">
+      <data key="e_label">toMerchant</data>
+    </edge>
+    <edge id="e20" source="TX-3" target="M-2">
+      <data key="e_label">toMerchant</data>
+    </edge>
+    <edge id="e21" source="TX-4" target="M-1">
+      <data key="e_label">toMerchant</data>
+    </edge>
+    <edge id="e22" source="M-1" target="CITY-1">
+      <data key="e_label">locatedIn</data>
+    </edge>
+    <edge id="e23" source="M-2" target="CITY-2">
+      <data key="e_label">locatedIn</data>
+    </edge>
+  </graph>
+</graphml>

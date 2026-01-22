@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<graphml xmlns="http://graphml.graphdrawing.org/xmlns">
+  <key id="n_label" for="node" attr.name="label" attr.type="string"/>
+  <key id="n_name" for="node" attr.name="name" attr.type="string"/>
+  <key id="n_issue_type" for="node" attr.name="issueType" attr.type="string"/>
+  <key id="n_create_time" for="node" attr.name="createTime" attr.type="string"/>
+  <key id="n_status" for="node" attr.name="status" attr.type="string"/>
+  <key id="n_success_rate" for="node" attr.name="successRate" attr.type="double"/>
+  <key id="n_region" for="node" attr.name="region" attr.type="string"/>
+  <key id="n_node_type" for="node" attr.name="nodeType" attr.type="string"/>
+  <key id="n_signal_loss" for="node" attr.name="signalLossRate" attr.type="double"/>
+  <key id="n_down_mbps" for="node" attr.name="downMbps" attr.type="double"/>
+  <key id="n_up_mbps" for="node" attr.name="upMbps" attr.type="double"/>
+  <key id="n_event_type" for="node" attr.name="eventType" attr.type="string"/>
+  <key id="n_severity" for="node" attr.name="severity" attr.type="int"/>
+  <key id="n_start_time" for="node" attr.name="startTime" attr.type="string"/>
+  <key id="n_description" for="node" attr.name="description" attr.type="string"/>
+  <key id="e_label" for="edge" attr.name="label" attr.type="string"/>
+  <graph id="G" edgedefault="directed">
+    <node id="U-1">
+      <data key="n_label">User</data>
+      <data key="n_name">Yuan</data>
+    </node>
+    <node id="U-2">
+      <data key="n_label">User</data>
+      <data key="n_name">Chen</data>
+    </node>
+    <node id="U-3">
+      <data key="n_label">User</data>
+      <data key="n_name">Lin</data>
+    </node>
+    <node id="CI-1">
+      <data key="n_label">CallIssue</data>
+      <data key="n_issue_type">CALL_DROP</data>
+      <data key="n_create_time">2024-07-01</data>
+    </node>
+    <node id="CI-2">
+      <data key="n_label">CallIssue</data>
+      <data key="n_issue_type">CALL_FAIL</data>
+      <data key="n_create_time">2024-07-02</data>
+    </node>
+    <node id="CI-3">
+      <data key="n_label">CallIssue</data>
+      <data key="n_issue_type">POOR_QUALITY</data>
+      <data key="n_create_time">2024-07-03</data>
+    </node>
+    <node id="SIM-1">
+      <data key="n_label">SimCard</data>
+      <data key="n_status">OK</data>
+    </node>
+    <node id="SIM-2">
+      <data key="n_label">SimCard</data>
+      <data key="n_status">ARREARS</data>
+    </node>
+    <node id="SIM-3">
+      <data key="n_label">SimCard</data>
+      <data key="n_status">OK</data>
+    </node>
+    <node id="BS-1">
+      <data key="n_label">BaseStation</data>
+      <data key="n_name">BS-HZ-01</data>
+      <data key="n_success_rate">0.72</data>
+      <data key="n_region">HZ</data>
+    </node>
+    <node id="BS-2">
+      <data key="n_label">BaseStation</data>
+      <data key="n_name">BS-SH-05</data>
+      <data key="n_success_rate">0.99</data>
+      <data key="n_region">SH</data>
+    </node>
+    <node id="BS-3">
+      <data key="n_label">BaseStation</data>
+      <data key="n_name">BS-SZ-02</data>
+      <data key="n_success_rate">0.98</data>
+      <data key="n_region">SZ</data>
+    </node>
+    <node id="N-1">
+      <data key="n_label">NetworkNode</data>
+      <data key="n_name">Backhaul-A</data>
+      <data key="n_node_type">BACKHAUL</data>
+      <data key="n_signal_loss">0.6</data>
+    </node>
+    <node id="N-2">
+      <data key="n_label">NetworkNode</data>
+      <data key="n_name">Core-A</data>
+      <data key="n_node_type">CORE</data>
+      <data key="n_signal_loss">0.1</data>
+    </node>
+    <node id="N-3">
+      <data key="n_label">NetworkNode</data>
+      <data key="n_name">Backhaul-B</data>
+      <data key="n_node_type">BACKHAUL</data>
+      <data key="n_signal_loss">0.2</data>
+    </node>
+    <node id="ST-1">
+      <data key="n_label">SpeedTest</data>
+      <data key="n_down_mbps">45.5</data>
+      <data key="n_up_mbps">8.1</data>
+    </node>
+    <node id="ST-2">
+      <data key="n_label">SpeedTest</data>
+      <data key="n_down_mbps">12.0</data>
+      <data key="n_up_mbps">4.2</data>
+    </node>
+    <node id="ST-3">
+      <data key="n_label">SpeedTest</data>
+      <data key="n_down_mbps">0.4</data>
+      <data key="n_up_mbps">0.2</data>
+    </node>
+    <node id="EV-1">
+      <data key="n_label">Event</data>
+      <data key="n_event_type">BACKHAUL_OUTAGE</data>
+      <data key="n_severity">4</data>
+      <data key="n_start_time">2024-07-01T09:05:00Z</data>
+      <data key="n_description">Backhaul fiber cut</data>
+    </node>
+    <node id="EV-2">
+      <data key="n_label">Event</data>
+      <data key="n_event_type">SIM_ARREARS</data>
+      <data key="n_severity">1</data>
+      <data key="n_start_time">2024-07-02T08:10:00Z</data>
+      <data key="n_description">SIM card overdue</data>
+    </node>
+    <node id="EV-3">
+      <data key="n_label">Event</data>
+      <data key="n_event_type">LOW_SPEED</data>
+      <data key="n_severity">2</data>
+      <data key="n_start_time">2024-07-03T18:20:00Z</data>
+      <data key="n_description">Local access speed degradation</data>
+    </node>
+
+    <edge id="e1" source="CI-1" target="U-1">
+      <data key="e_label">reportedBy</data>
+    </edge>
+    <edge id="e2" source="CI-2" target="U-2">
+      <data key="e_label">reportedBy</data>
+    </edge>
+    <edge id="e3" source="CI-3" target="U-3">
+      <data key="e_label">reportedBy</data>
+    </edge>
+    <edge id="e4" source="CI-1" target="BS-1">
+      <data key="e_label">at</data>
+    </edge>
+    <edge id="e5" source="CI-2" target="BS-2">
+      <data key="e_label">at</data>
+    </edge>
+    <edge id="e6" source="CI-3" target="BS-3">
+      <data key="e_label">at</data>
+    </edge>
+    <edge id="e7" source="U-1" target="SIM-1">
+      <data key="e_label">usesSim</data>
+    </edge>
+    <edge id="e8" source="U-2" target="SIM-2">
+      <data key="e_label">usesSim</data>
+    </edge>
+    <edge id="e9" source="U-3" target="SIM-3">
+      <data key="e_label">usesSim</data>
+    </edge>
+    <edge id="e10" source="U-1" target="ST-1">
+      <data key="e_label">speedTest</data>
+    </edge>
+    <edge id="e11" source="U-2" target="ST-2">
+      <data key="e_label">speedTest</data>
+    </edge>
+    <edge id="e12" source="U-3" target="ST-3">
+      <data key="e_label">speedTest</data>
+    </edge>
+    <edge id="e13" source="BS-1" target="N-1">
+      <data key="e_label">connectedTo</data>
+    </edge>
+    <edge id="e14" source="N-1" target="N-2">
+      <data key="e_label">connectedTo</data>
+    </edge>
+    <edge id="e15" source="BS-2" target="N-2">
+      <data key="e_label">connectedTo</data>
+    </edge>
+    <edge id="e16" source="BS-3" target="N-3">
+      <data key="e_label">connectedTo</data>
+    </edge>
+    <edge id="e17" source="N-1" target="EV-1">
+      <data key="e_label">hasEvent</data>
+    </edge>
+    <edge id="e18" source="SIM-2" target="EV-2">
+      <data key="e_label">hasEvent</data>
+    </edge>
+    <edge id="e19" source="ST-3" target="EV-3">
+      <data key="e_label">hasEvent</data>
+    </edge>
+  </graph>
+</graphml>

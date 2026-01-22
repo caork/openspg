@@ -22,3 +22,4 @@ Other key packages:
 - `KGReasonerSession` orchestrates parsing, planning, and execution.
 - `GraphState` is used by `LocalRDG` to access graph data.
 - Physical operators are executed to produce `Row` or `RDG` results.
+

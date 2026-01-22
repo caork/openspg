@@ -22,3 +22,4 @@ The grammar includes `Define` blocks, `GraphStructure`, `Rule`, and `Action`, pl
 
 - Output blocks are validated by `Validator` and planned by `LogicalPlanner`.
 - If you replace KGDSL, provide another `ParserInterface` implementation.
+

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<graphml xmlns="http://graphml.graphdrawing.org/xmlns">
+  <key id="n_label" for="node" attr.name="label" attr.type="string"/>
+  <key id="n_name" for="node" attr.name="name" attr.type="string"/>
+  <key id="n_level" for="node" attr.name="level" attr.type="string"/>
+  <key id="e_label" for="edge" attr.name="label" attr.type="string"/>
+  <graph id="G" edgedefault="directed">
+    <node id="INC-1">
+      <data key="n_label">Incident</data>
+      <data key="n_name">Checkout incident</data>
+    </node>
+    <node id="ALARM-1">
+      <data key="n_label">Alarm</data>
+      <data key="n_level">HIGH</data>
+    </node>
+    <node id="COMP-1">
+      <data key="n_label">Component</data>
+      <data key="n_name">PaymentService</data>
+    </node>
+    <edge id="e1" source="INC-1" target="ALARM-1">
+      <data key="e_label">triggeredBy</data>
+    </edge>
+    <edge id="e2" source="ALARM-1" target="COMP-1">
+      <data key="e_label">on</data>
+    </edge>
+  </graph>
+</graphml>

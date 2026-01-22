@@ -1,4 +1,3 @@
-
 # Network Root Cause Tutorial (Call Failures)
 
 This tutorial builds a more complex SPG Reasoner example for telecom-style root cause analysis. It starts from user call issues, checks base-station success rate, walks to the nearest failing network node, and links to the most plausible event. It also considers SIM arrears and user speed tests as alternative causes.
@@ -21,6 +20,7 @@ Customer support receives multiple complaints about call failures. For each repo
 
 - DSL: `reasoner-examples/src/main/resources/kgdsl/network_root_cause.kgdsl`
 - Runner: `reasoner-examples/src/main/java/com/antgroup/openspg/examples/NetworkRootCauseLocalRunnerExample.java`
+- GraphML data: `reasoner-examples/src/main/resources/graphml/network_root_cause.graphml`
 
 ## How to run
 
@@ -52,20 +52,21 @@ Edges:
 The runner in `NetworkRootCauseLocalRunnerExample` does four things:
 
 1) **Load the KGDSL**  
-   It reads `network_root_cause.kgdsl` from resources, so you can edit the DSL without touching Java.
+It reads `network_root_cause.kgdsl` from resources, so you can edit the DSL without touching Java.
 
-2) **Register the schema**  
-   It builds a `PropertyGraphCatalog` describing node and edge properties used in the DSL. This is required
-   so the Reasoner can validate fields like `bs.successRate` or `ev.eventType`.
+2) **Infer and register the schema**  
+It calls `GraphMLLocalGraphLoader.buildCatalog(..., dsl)` to infer node and edge properties from the
+GraphML file and also register edge types declared in `Define` blocks. This lets the Reasoner validate
+fields like `bs.successRate` or `ev.eventType` without a manual schema map.
 
 3) **Seed the query**  
-   It sets the `startIdList` with the three `CallIssue` nodes. These are the starting points for the rules and
-   the final exploration query. In the DSL, only the last `GraphStructure` uses `__start__='true'` because
-   the local runner applies the start IDs to the last statement only.
+It sets the `startIdList` with the three `CallIssue` nodes. These are the starting points for the rules and
+the final exploration query. In the DSL, only the last `GraphStructure` uses `__start__='true'` because
+the local runner applies the start IDs to the last statement only.
 
-4) **Load in-memory graph data**  
-   The inner `NetworkRootCauseGraphLoader` creates a small graph of users, SIMs, base stations, backhaul
-   nodes, and events. This makes the example runnable without any external data source.
+4) **Load GraphML data**  
+The `NetworkRootCauseGraphMLLoader` reads `network_root_cause.graphml` and builds the in-memory graph.
+This keeps the example runnable without any external data source while making the dataset editable.
 
 Key pieces to notice in the code:
 
@@ -80,13 +81,13 @@ Key pieces to notice in the code:
 The DSL contains three `Define` blocks that infer `rootCause` edges:
 
 1) **SIM arrears**  
-   If `sim.status == 'ARREARS'`, link the call issue to the `SIM_ARREARS` event.
+If `sim.status == 'ARREARS'`, link the call issue to the `SIM_ARREARS` event.
 
 2) **Backhaul outage**  
-   If the base station success rate is low and the nearest network node has significant signal loss, link to a high-severity `BACKHAUL_OUTAGE` event.
+If the base station success rate is low and the nearest network node has significant signal loss, link to a high-severity `BACKHAUL_OUTAGE` event.
 
 3) **Local low speed**  
-   If the SIM is OK, the base station is healthy, but the user speed test is low, link to a `LOW_SPEED` event.
+If the SIM is OK, the base station is healthy, but the user speed test is low, link to a `LOW_SPEED` event.
 
 Finally, a `get(...)` query returns the inferred root cause plus exploration context (base station KPI, SIM status, speed test, nearest network node, and the traversal path).
 
@@ -124,6 +125,39 @@ Each row corresponds to one `CallIssue` and its inferred `rootCause` event:
 - `st.downMbps` reveals local access issues.
 - `ev.eventType` is the inferred root cause event.
 - `__path__` shows the traversal path for the backhaul chain.
+
+### Example edge output (graph mode)
+
+If `kg.reasoner.output.graph=true`, the runner prints inferred edges instead of rows. Example:
+
+```
+edge_list_start
+  (0) Edge(s=CallIssue_-2010113363008216754,p=CallIssue_rootCause_Event,o=Event_6782456717300958980,direction=OUT,version=0,property={
+    "__to_id__":"EV-3",
+    "__to_id_type__":"Event",
+    "__from_id__":"CI-3",
+    "__from_id_type__":"CallIssue",
+    "process":{
+      "hitRule":[
+        {"ruleName":"R2","ruleValue":"bs.successRate >= 0.98","hitValue":"bs.successRate=0.98"},
+        {"ruleName":"R3","ruleValue":"st.downMbps < 1.0","hitValue":"st.downMbps=0.4"},
+        {"ruleName":"R4","ruleValue":"ev.eventType == \"LOW_SPEED\"","hitValue":"ev.eventType=LOW_SPEED"},
+        {"ruleName":"R1","ruleValue":"sim.status != \"ARREARS\"","hitValue":"sim.status=OK"}
+      ],
+      "failedRule":[],
+      "targetId":"EV-3",
+      "targetLabel":"Event",
+      "startNode":{"bizId":"CI-3","label":"CallIssue"}
+    }
+  })
+edge_list_end
+```
+
+How to read it:
+
+- **CI-3 -> EV-3**: `CallIssue` CI-3 is linked to `Event` EV-3.
+- **process.hitRule**: the low-speed rule fired (SIM OK, base station healthy, speed test low).
+- **failedRule** is empty: no rule in that branch failed.
 
 ## Try variations
 

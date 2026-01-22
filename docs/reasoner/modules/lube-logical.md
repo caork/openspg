@@ -22,3 +22,4 @@ Optimization rules live in `optimizer/rules` (e.g., `FilterPushDown`, `Aggregate
 
 - Used by `KGReasonerSession` during `plan` and `getResult`.
 - If you keep KGDSL and the IR, this module can be reused without changes.
+

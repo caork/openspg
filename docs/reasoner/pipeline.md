@@ -63,3 +63,4 @@ KGReasonerSession.getResult(query)
 - Replace `ParserInterface` to support another DSL.
 - Replace `Catalog` to bind schema from a different source.
 - Replace RDG implementation for a new execution engine.
+

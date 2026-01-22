@@ -16,6 +16,7 @@ The goal is not to compute a final score, but to **expand the context** around t
 
 - DSL: `reasoner-examples/src/main/resources/kgdsl/graph_exploration.kgdsl`
 - Runner: `reasoner-examples/src/main/java/com/antgroup/openspg/examples/GraphExplorationLocalRunnerExample.java`
+- GraphML data: `reasoner-examples/src/main/resources/graphml/graph_exploration.graphml`
 
 ## How to run
 
@@ -50,7 +51,8 @@ Edges:
 - `toMerchant` (Transaction -> Merchant)
 - `locatedIn` (Merchant -> City)
 
-The Java loader creates a small in-memory graph that represents these relationships.
+The GraphML loader reads `graph_exploration.graphml` to build a small in-memory graph and
+auto-infers the schema for the local runner.
 
 ## What the KGDSL does
 
@@ -100,10 +102,10 @@ This output is well-suited for a "triage" view where analysts want fast context 
 ## Try variations
 
 1) Increase search depth:
-   - Change `repeat(1,3)` to `repeat(1,5)`.
+- Change `repeat(1,3)` to `repeat(1,5)`.
 2) Focus on a specific channel:
-   - Add `R3: SeedTxn.channel == 'WEB'` to the `Rule` block.
+- Add `R3: SeedTxn.channel == 'WEB'` to the `Rule` block.
 3) Broaden seeds:
-   - Add more start IDs in `GraphExplorationLocalRunnerExample`.
+- Add more start IDs in `GraphExplorationLocalRunnerExample`.
 
-If you want this to run on a real dataset, replace the in-memory graph loader with a loader that reads from your data source.
+If you want this to run on a real dataset, replace the GraphML loader with one that reads from your data source.

@@ -29,3 +29,4 @@ Catalog-related types include:
 - The KGDSL parser returns `Block` objects defined here.
 - The logical planner consumes these blocks and resolves them using a `Catalog`.
 - The physical planner and RDG layer rely on IR structures for execution.
+

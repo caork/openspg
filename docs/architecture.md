@@ -169,3 +169,4 @@ return execute(physical)  // Row or RDG
 ## Notes
 
 - The root README files give a short product overview; these docs go deeper into architecture and code paths.
+

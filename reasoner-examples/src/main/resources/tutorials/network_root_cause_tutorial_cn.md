@@ -20,6 +20,7 @@ SPG 白皮书提到多实体关联的风险推理场景（例如“AI 电话诈�
 
 - DSL：`reasoner-examples/src/main/resources/kgdsl/network_root_cause.kgdsl`
 - 运行器：`reasoner-examples/src/main/java/com/antgroup/openspg/examples/NetworkRootCauseLocalRunnerExample.java`
+- GraphML 数据：`reasoner-examples/src/main/resources/graphml/network_root_cause.graphml`
 
 ## 如何运行
 
@@ -51,16 +52,19 @@ mvn -pl reasoner-examples -am exec:java \
 `NetworkRootCauseLocalRunnerExample` 主要做四件事：
 
 1) **加载 KGDSL**  
-   从资源文件读取 `network_root_cause.kgdsl`，便于只改 DSL 不改 Java。
+从资源文件读取 `network_root_cause.kgdsl`，便于只改 DSL 不改 Java。
 
-2) **注册 Schema**  
-   构建 `PropertyGraphCatalog`，声明 DSL 中用到的节点/边属性，例如 `bs.successRate`、`ev.eventType`。
+2) **推断并注册 Schema**  
+调用 `GraphMLLocalGraphLoader.buildCatalog(..., dsl)` 从 GraphML 自动推断节点/边属性，
+同时补齐 `Define` 中声明的边类型并注册 `PropertyGraphCatalog`，让 Reasoner 校验
+`bs.successRate`、`ev.eventType` 等字段，不再需要手写 schema 映射。
 
 3) **设置起始节点**  
-   通过 `startIdList` 指定要分析的 `CallIssue`，这些就是输入问题的起点。
+通过 `startIdList` 指定要分析的 `CallIssue`，这些就是输入问题的起点。
 
-4) **加载内存图数据**  
-   内部 `NetworkRootCauseGraphLoader` 构造一张小图，让示例无需外部数据即可运行。
+4) **加载 GraphML 数据**  
+`NetworkRootCauseGraphMLLoader` 读取 `network_root_cause.graphml` 并构建内存图，
+便于直接编辑数据集且无需外部数据源。
 
 注意点：
 
@@ -74,14 +78,14 @@ mvn -pl reasoner-examples -am exec:java \
 DSL 中包含三个 `Define` 块，分别生成 `rootCause`：
 
 1) **SIM 欠费**  
-   如果 `sim.status == 'ARREARS'`，并且事件类型为 `SIM_ARREARS`，则建立根因关系。
+如果 `sim.status == 'ARREARS'`，并且事件类型为 `SIM_ARREARS`，则建立根因关系。
 
 2) **回传链路故障**  
-   如果基站成功率低、回传节点信号损失高、事件为 `BACKHAUL_OUTAGE` 且严重度高，则建立根因关系。  
-   规则使用 `keep_shortest_path` 保留最短链路。
+如果基站成功率低、回传节点信号损失高、事件为 `BACKHAUL_OUTAGE` 且严重度高，则建立根因关系。  
+规则使用 `keep_shortest_path` 保留最短链路。
 
 3) **本地低速**  
-   如果 SIM 正常、基站健康，但测速很差，则关联 `LOW_SPEED` 事件作为根因。
+如果 SIM 正常、基站健康，但测速很差，则关联 `LOW_SPEED` 事件作为根因。
 
 最后的 `get(...)` 查询会返回：通话问题、SIM 状态、基站指标、测速结果、网络节点指标、事件类型，以及 `__path__` 路径。
 
@@ -111,15 +115,48 @@ DSL 中包含三个 `Define` 块，分别生成 `rootCause`：
 
 每一行（或每条边）代表一个 `CallIssue` 及其推断出的根因：
 
-- `ci.issueType`：用户描述的问题类型  
-- `bs.successRate` / `n.signalLossRate`：网络侧健康状况  
-- `sim.status`：是否欠费  
-- `st.downMbps`：本地测速指标  
-- `ev.eventType`：推断的根因事件  
+- `ci.issueType`：用户描述的问题类型
+- `bs.successRate` / `n.signalLossRate`：网络侧健康状况
+- `sim.status`：是否欠费
+- `st.downMbps`：本地测速指标
+- `ev.eventType`：推断的根因事件
 - `__path__`：回传链路路径
+
+### 图模式输出示例（edge_list）
+
+当 `kg.reasoner.output.graph=true` 时，结果以边的形式打印，例如：
+
+```
+edge_list_start
+  (0) Edge(s=CallIssue_-2010113363008216754,p=CallIssue_rootCause_Event,o=Event_6782456717300958980,direction=OUT,version=0,property={
+    "__to_id__":"EV-3",
+    "__to_id_type__":"Event",
+    "__from_id__":"CI-3",
+    "__from_id_type__":"CallIssue",
+    "process":{
+      "hitRule":[
+        {"ruleName":"R2","ruleValue":"bs.successRate >= 0.98","hitValue":"bs.successRate=0.98"},
+        {"ruleName":"R3","ruleValue":"st.downMbps < 1.0","hitValue":"st.downMbps=0.4"},
+        {"ruleName":"R4","ruleValue":"ev.eventType == \"LOW_SPEED\"","hitValue":"ev.eventType=LOW_SPEED"},
+        {"ruleName":"R1","ruleValue":"sim.status != \"ARREARS\"","hitValue":"sim.status=OK"}
+      ],
+      "failedRule":[],
+      "targetId":"EV-3",
+      "targetLabel":"Event",
+      "startNode":{"bizId":"CI-3","label":"CallIssue"}
+    }
+  })
+edge_list_end
+```
+
+如何理解：
+
+- **CI-3 -> EV-3**：通话问题 CI-3 被判定由事件 EV-3 引起。
+- **process.hitRule**：命中的规则来自“低速”分支（SIM 正常、基站健康、测速过低）。
+- **failedRule** 为空：该分支没有规则失败。
 
 ## 试试这些变化
 
 1) 调整成功率阈值（例如 `0.9` 改成 `0.95`）。  
 2) 加一条新的 `CallIssue`，不欠费也没有测速，看回传规则如何表现。  
-3) 给回传链路增加一跳，观察 `keep_shortest_path` 的效果。  
+3) 给回传链路增加一跳，观察 `keep_shortest_path` 的效果。

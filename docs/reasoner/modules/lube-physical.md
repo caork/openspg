@@ -23,3 +23,4 @@ Physical operators include `PatternScan`, `ExpandInto`, `LinkedExpand`, `Filter`
 
 - RDG implementations must satisfy the `RDG` interface.
 - Physical operators map directly onto RDG methods.
+

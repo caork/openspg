@@ -32,3 +32,4 @@ The whitepaper outlines a layered architecture; OpenSPG implements the Schema + 
 
 - For code structure: [Project layout](project-layout.md).
 - For reasoning details: [Reasoner overview](reasoner/index.md).
+

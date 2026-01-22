@@ -35,3 +35,4 @@ Reasoner is the subsystem that turns KGDSL queries and rules into executable gra
 - [RDG execution model](rdg.md)
 - [Runtime and sessions](runtime.md)
 - [SDK extraction guide](sdk.md)
+
