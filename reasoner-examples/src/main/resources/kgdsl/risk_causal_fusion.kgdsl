@@ -1,0 +1,156 @@
+// Risk mining: classify fraudster persons
+Define (p:Person)-[b:belongTo]->(o:TaxonomyOfRiskUser/`Fraudster`) {
+  GraphStructure {
+    p [Person]
+    d [Device]
+    app [App]
+    a [Account]
+    t [Transaction]
+    m [Merchant]
+    o [TaxonomyOfRiskUser/`Fraudster`]
+    p->d [usesDevice]
+    d->app [installed]
+    p->a [owns]
+    a->t [initiated]
+    t->m [toMerchant]
+  }
+  Rule {
+    deviceCnt = group(p).count(d.id)
+    riskyAppCnt = group(p).if(app.riskLevel == 'HIGH' || app.name like '%Proxy%').count(app.id)
+    blackTxnAmt = group(p).if(m.riskTag == 'BLACK').sum(t.amount)
+    highValueCnt = group(p).if(t.amount >= 500).count(t.id)
+    riskScore = rule_value(deviceCnt >= 2 && (riskyAppCnt > 0 || blackTxnAmt >= 800), 90, 30)
+    R1: riskScore >= 80
+    R2: highValueCnt >= 1
+  }
+  Action {
+    createEdgeInstance(
+      src=p,
+      dst=o,
+      type=belongTo,
+      value={}
+    )
+  }
+}
+
+// Risk signal: device ring (create node + edge)
+Define (d:Device)-[e:evidenceOf]->(sig:RiskSignal) {
+  GraphStructure {
+    p [Person]
+    d [Device]
+    app [App]
+    sig [RiskSignal]
+    p->d [usesDevice]
+    d->app [installed]
+    d->sig [evidenceOf, __optional__='true'] as sigEdge
+  }
+  Rule {
+    personCnt = group(d).count(p.id)
+    riskyAppCnt = group(d).if(app.riskLevel == 'HIGH').count(app.id)
+    R1: personCnt >= 2
+    R2: riskyAppCnt > 0
+  }
+  Action {
+    sig = createNodeInstance(
+      type=RiskSignal,
+      value={
+        id = d.id
+        signalType = 'DEVICE_RING'
+        score = personCnt * 10
+        description = 'Device shared by multiple persons with risky app'
+      }
+    )
+    createEdgeInstance(
+      src=d,
+      dst=sig,
+      type=evidenceOf,
+      value={}
+    )
+  }
+}
+
+// Enterprise causal: link operational events to merchant impacts
+Define (e1:Event)-[l:leadTo]->(e2:Event) {
+  GraphStructure {
+    m [Merchant]
+    c [Company]
+    e1 [Event]
+    e2 [Event]
+    m->c [operatedBy, __optional__='true'] as opEdge
+    m->c [suppliedBy, __optional__='true'] as supEdge
+    c->e1 [hasEvent]
+    m->e2 [hasEvent, __optional__='true'] as impactEdge
+  }
+  Rule {
+    R1: e1.eventType == 'LOGISTICS_STRIKE'
+    R2: e2.eventType in ['REFUND_SPIKE', 'CHARGEBACK_SPIKE']
+    R3: e1.severity >= 3
+  }
+  Action {
+    createEdgeInstance(
+      src=e1,
+      dst=e2,
+      type=leadTo,
+      value={}
+    )
+  }
+}
+
+// Exploration query: expand account network + risk and event context
+GraphStructure {
+  seed [Account, __start__='true']
+  peer [Account]
+  owner [Person]
+  device [Device]
+  app [App]
+  ip [Ip]
+  txn [Transaction]
+  m [Merchant]
+  city [City]
+  ev [Event]
+  ev2 [Event]
+  sig [RiskSignal]
+  fraud [TaxonomyOfRiskUser/`Fraudster`]
+  seed->peer [transfer] repeat(1,3) as transferPath
+  owner->seed [owns]
+  owner->device [usesDevice]
+  device->app [installed]
+  device->ip [bindIp, __optional__='true'] as ipEdge
+  seed->txn [initiated, __optional__='true'] as txnEdge
+  txn->m [toMerchant, __optional__='true'] as mEdge
+  m->city [locatedIn, __optional__='true'] as cityEdge
+  owner->fraud [belongTo, __optional__='true'] as fraudEdge
+  device->sig [evidenceOf, __optional__='true'] as signalEdge
+  m->ev [hasEvent, __optional__='true'] as mEvent
+  ev->ev2 [leadTo, __optional__='true'] as causeEdge
+}
+Rule {
+  R1: group(seed).keep_shortest_path(transferPath)
+  R2: transferPath.edges().constraint((pre, cur) => cur.amount > 0)
+  totalAmt = group(seed).sum(txn.amount)
+  txnCnt = group(seed).count(txn.id)
+  hasIp = rule_value(exist(ip.ip), 'Y', 'N')
+  riskLabel = rule_value(totalAmt >= 1000 || txnCnt >= 2, 'HIGH', 'LOW')
+}
+Action {
+  get(
+    seed.id as seedAccount,
+    peer.id as peerAccount,
+    owner.name as ownerName,
+    owner.region as ownerRegion,
+    device.id as deviceId,
+    app.name as appName,
+    ip.ip as ip,
+    hasIp,
+    fraud.id as fraudTag,
+    sig.signalType as signalType,
+    m.id as merchantId,
+    m.riskTag as merchantRisk,
+    city.name as cityName,
+    ev.eventType as eventType,
+    ev.severity as eventSeverity,
+    totalAmt,
+    riskLabel,
+    __path__
+  )
+}

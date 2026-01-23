@@ -48,6 +48,10 @@ to hand-write the property map.
 - `reasoner-examples/src/main/java/com/antgroup/openspg/examples/NetworkRootCauseLocalRunnerExample.java`: Java example that runs the network root cause rules.
 - `reasoner-examples/src/main/resources/tutorials/network_root_cause_tutorial.md`: tutorial for the network root cause scenario.
 - `reasoner-examples/src/main/resources/graphml/network_root_cause.graphml`: GraphML data for the network root cause example.
+- `reasoner-examples/src/main/resources/kgdsl/risk_causal_fusion.kgdsl`: comprehensive KGDSL example that mixes risk mining and causal inference.
+- `reasoner-examples/src/main/java/com/antgroup/openspg/examples/RiskCausalFusionLocalRunnerExample.java`: Java runner for the risk + causal fusion scenario.
+- `reasoner-examples/src/main/resources/tutorials/risk_causal_fusion_tutorial.md`: tutorial for the comprehensive KGDSL scenario.
+- `reasoner-examples/src/main/resources/graphml/risk_causal_fusion.graphml`: GraphML data for the risk + causal fusion example.
 
 ## RCA KGDSL example
 
@@ -162,4 +166,3 @@ Action {
 
 - `LocalReasonerRunner` uses the graph loader class to populate an in-memory `GraphState`.
 - The inferred `rootCause` edge is returned in the graph result.
-
