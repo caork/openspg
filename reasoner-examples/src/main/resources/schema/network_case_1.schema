@@ -1,0 +1,856 @@
+PhoneCallsService(电话业务): EntityType
+	desc:电话业务承载在用户终端域
+	properties:
+		description(描述): Text
+		name(名称): Text
+		serviceId(业务ID): Text
+	relations:
+		bearOnCn(承载在核心网域): CoreNetwork
+		bearOnCell(承载在无线域): Cell
+		bearOnUser(承载在UE域): User
+
+CallSignalingSuccessRateMetric(呼叫信令传输成功率指标): EntityType
+	desc:呼叫信令传输成功率影响语音业务体验
+	properties:
+		description(描述): Text
+		name(名称): Text
+		metricName(指标名称): Text
+		timestamp(测量时间): STD.Timestamp
+		dataSource(数据来源): Text
+		threshold(阈值): Float
+		metricValue(指标值): Float
+		unit(测量单位): Text
+	relations:
+		leadTo(导致): SignalTransmissionFailureEvent
+		affectsExperience(影响体验): VoiceServiceExperience
+
+SignalDegradationEvent(信号劣化事件): EventType
+	desc:事件详细描述
+	properties:
+		description(描述): Text
+		name(名称): Text
+		subject(事件主体): Cell
+		severity(事件严重程度): Text
+		eventId(事件ID): Text
+		eventDescription(事件描述): Text
+
+GameService(游戏业务): EntityType
+	desc:游戏业务承载在服务提供商域
+	properties:
+		description(描述): Text
+		name(名称): Text
+		serviceId(业务ID): Text
+	relations:
+		bearOnCn(承载在核心网域): CoreNetwork
+		bearOnSp(承载在SP域): ServiceProvider
+		bearOnUser(承载在UE域): User
+		bearOnCell(承载在无线域): Cell
+
+WebBrowsingService(上网业务): EntityType
+	desc:上网业务承载在服务提供商域
+	properties:
+		description(描述): Text
+		name(名称): Text
+		serviceId(业务ID): Text
+	relations:
+		bearOnCn(承载在核心网域): CoreNetwork
+		bearOnCell(承载在无线域): Cell
+		bearOnSp(承载在SP域): ServiceProvider
+		bearOnUser(承载在UE域): User
+
+VoiceServiceExperience(语音业务体验): EntityType
+	desc:语音业务体验详情描述
+	properties:
+		description(描述): Text
+		name(名称): Text
+		experienceId(体验ID): Text
+		experienceContent(体验内容): Text
+		userId(用户ID): Text
+		serviceType(业务类型): Text
+		dataSource(数据来源): Text
+		feedback(反馈内容): Text
+		timestamp(评价时间): STD.Timestamp
+		rating(体验评分): Integer
+
+TransformJitterMetric(传输抖动指标): EntityType
+	desc:传输抖动影响视频业务体验
+	properties:
+		description(描述): Text
+		name(名称): Text
+		metricName(指标名称): Text
+		dataSource(数据来源): Text
+		metricValue(指标值): Float
+		timestamp(测量时间): STD.Timestamp
+		threshold(阈值): Float
+		unit(测量单位): Text
+	relations:
+		leadTo(导致): JitterAndDegradationEvent
+		affectsExperience(影响体验): VideoServiceExperience
+
+ResourceCongestionEvent(资源拥塞事件): EventType
+	desc:事件详细描述
+	properties:
+		description(描述): Text
+		name(名称): Text
+		subject(事件主体): Cell
+		severity(事件严重程度): Text
+		eventId(事件ID): Text
+		eventDescription(事件描述): Text
+
+DelayDegradationEvent(时延劣化事件): EventType
+	desc:事件详细描述
+	properties:
+		description(描述): Text
+		name(名称): Text
+		subject(事件主体): CoreNetwork
+		eventId(事件ID): Text
+		eventDescription(事件描述): Text
+		severity(事件严重程度): Text
+
+RsrpMetric(RSRP值指标): EntityType
+	properties:
+		description(描述): Text
+		name(名称): Text
+		dataSource(数据来源): Text
+		unit(测量单位): Text
+		metricName(指标名称): Text
+		threshold(阈值): Float
+		timestamp(测量时间): STD.Timestamp
+		metricValue(指标值): Float
+	relations:
+		leadTo(导致): CoverageAbsenseEvent
+		affectsExperience(影响体验): NoSignalServiceExperience
+
+CodeServiceExperience(扫码业务体验): EntityType
+	desc:扫码业务体验详情描述
+	properties:
+		description(描述): Text
+		name(名称): Text
+		experienceId(体验ID): Text
+		feedback(反馈内容): Text
+		userId(用户ID): Text
+		dataSource(数据来源): Text
+		rating(体验评分): Integer
+		timestamp(评价时间): STD.Timestamp
+		experienceContent(体验内容): Text
+		serviceType(业务类型): Text
+
+JitterAndDegradationEvent(抖动劣化事件): EventType
+	desc:事件详细描述
+	properties:
+		description(描述): Text
+		name(名称): Text
+		subject(事件主体): CoreNetwork
+		severity(事件严重程度): Text
+		eventId(事件ID): Text
+		eventDescription(事件描述): Text
+
+AuthorityAbnormalEvent(权限异常事件): EventType
+	desc:事件详细描述
+	properties:
+		description(描述): Text
+		name(名称): Text
+		subject(事件主体): User
+		eventDescription(事件描述): Text
+		eventId(事件ID): Text
+		severity(事件严重程度): Text
+
+CoreNetwork(核心网): EntityType
+	desc:电信核心网络设备和服务
+	properties:
+		description(描述): Text
+		name(名称): Text
+		coreNetworkId(核心网ID): Text
+	relations:
+		hasLowLatencyChannelDelayMetric(具有低时延通道转发时延指标): LowLatencyChannelDelayMetric
+		hasDnsResolveDelayMetric(具有DNS解析指标): DnsResolveDelayMetric
+		hasUserSubscriptionStatus(具有用户签约状态指标): UserSubscriptionStatusMetric
+		hasCallSignaling(具有呼叫信令指标): CallSignalingSuccessRateMetric
+		hasTransformJitterMetric(具有传输抖动性能指标): TransformJitterMetric
+		hasImsRegistration(具有IMS注册指标): ImsRegistrationSuccessRateMetric
+		hasForwardingDelayMetric(具有转发时延指标): ForwardingDelayMetric
+
+VideoServiceExperience(视频业务体验): EntityType
+	desc:视频业务体验详情描述
+	properties:
+		description(描述): Text
+		name(名称): Text
+		experienceId(体验ID): Text
+		userId(用户ID): Text
+		dataSource(数据来源): Text
+		experienceContent(体验内容): Text
+		feedback(反馈内容): Text
+		rating(体验评分): Integer
+		serviceType(业务类型): Text
+		timestamp(评价时间): STD.Timestamp
+
+ServiceExperience(业务体验): EntityType
+	desc:体验数据来源
+	properties:
+		description(描述): Text
+		name(名称): Text
+		experienceId(体验ID): Text
+		userId(用户ID): Text
+		experienceContent(体验内容): Text
+		serviceType(业务类型): Text
+		dataSource(数据来源): Text
+		timestamp(评价时间): STD.Timestamp
+		rating(体验评分): Integer
+		feedback(反馈内容): Text
+
+Business(业务): EntityType
+	desc:业务关联游戏业务
+	properties:
+		description(描述): Text
+		name(名称): Text
+		businessId(业务ID): Text
+	relations:
+		associatePhoneCallsService(关联电话业务): PhoneCallsService
+		associateNoSignalService(关联无信号业务): NoSignalService
+		associateWebBrowsingService(关联上网业务): WebBrowsingService
+		associateVideoService(关联视频业务): VideoService
+		associateScanQrcodeService(关联扫码业务): ScanQrcodeService
+		associateGameService(关联游戏业务): GameService
+		associateVoiceService(关联语音业务): VoiceService
+
+DownlinkThroughputFluctuationMetric(下行吞吐量波动幅度指标): EntityType
+	desc:下行吞吐量波动幅度影响视频业务体验
+	properties:
+		description(描述): Text
+		name(名称): Text
+		metricName(指标名称): Text
+		timestamp(测量时间): STD.Timestamp
+		dataSource(数据来源): Text
+		metricValue(指标值): Float
+		threshold(阈值): Float
+		unit(测量单位): Text
+	relations:
+		leadTo(导致): SpeedFluctuationEvent
+		affectsExperience(影响体验): VideoServiceExperience
+
+CacheInvalidationEvent(缓存失效事件): EventType
+	desc:事件详细描述
+	properties:
+		description(描述): Text
+		name(名称): Text
+		subject(事件主体): ServiceProvider
+		eventDescription(事件描述): Text
+		severity(事件严重程度): Text
+		eventId(事件ID): Text
+
+VoiceService(语音业务): EntityType
+	desc:语音业务承载在用户终端域
+	properties:
+		description(描述): Text
+		name(名称): Text
+		serviceId(业务ID): Text
+	relations:
+		bearOnCn(承载在核心网域): CoreNetwork
+		bearOnUser(承载在UE域): User
+		bearOnCell(承载在无线域): Cell
+
+NoSignalService(无信号业务): EntityType
+	desc:无信号业务承载在服务提供商域
+	properties:
+		description(描述): Text
+		name(名称): Text
+		serviceId(业务ID): Text
+	relations:
+		bearOnCn(承载在核心网域): CoreNetwork
+		bearOnUser(承载在UE域): User
+		bearOnCell(承载在无线域): Cell
+		bearOnSp(承载在SP域): ServiceProvider
+
+ServerResponseTimeMetric(服务器响应时间指标): EntityType
+	desc:服务器响应时间影响上网业务体验
+	properties:
+		description(描述): Text
+		name(名称): Text
+		metricName(指标名称): Text
+		threshold(阈值): Float
+		unit(测量单位): Text
+		dataSource(数据来源): Text
+		timestamp(测量时间): STD.Timestamp
+		metricValue(指标值): Float
+	relations:
+		leadTo(导致): ServiceResponseEvent
+		affectsExperience(影响体验): WebBrowsingExperience
+
+DnsResolveDelayMetric(DNS解析时延指标): EntityType
+	desc:DNS解析时延影响扫码业务体验
+	properties:
+		description(描述): Text
+		name(名称): Text
+		metricName(指标名称): Text
+		dataSource(数据来源): Text
+		metricValue(指标值): Float
+		unit(测量单位): Text
+		threshold(阈值): Float
+		timestamp(测量时间): STD.Timestamp
+	relations:
+		leadTo(导致): AddressFailureEvent
+		affectsExperience(影响体验): CodeServiceExperience
+
+ServiceNoUseEvent(服务不可用事件): EventType
+	desc:事件详细描述
+	properties:
+		description(描述): Text
+		name(名称): Text
+		subject(事件主体): ServiceProvider
+		eventDescription(事件描述): Text
+		severity(事件严重程度): Text
+		eventId(事件ID): Text
+
+CellResidenceSuccessRateMetric(小区驻留成功率指标): EntityType
+	desc:小区驻留成功率影响语音业务体验
+	properties:
+		description(描述): Text
+		name(名称): Text
+		metricName(指标名称): Text
+		dataSource(数据来源): Text
+		threshold(阈值): Float
+		unit(测量单位): Text
+		timestamp(测量时间): STD.Timestamp
+		metricValue(指标值): Float
+	relations:
+		leadTo(导致): ResidenceFailureEvent
+		affectsExperience(影响体验): VoiceServiceExperience
+
+CoverageAbsenseEvent(覆盖缺失事件): EventType
+	desc:事件详细描述
+	properties:
+		description(描述): Text
+		name(名称): Text
+		subject(事件主体): Cell
+		severity(事件严重程度): Text
+		eventDescription(事件描述): Text
+		eventId(事件ID): Text
+
+UplinkDownlinkJitterMetric(上下行抖动指标): EntityType
+	desc:上下行抖动影响游戏业务体验
+	properties:
+		description(描述): Text
+		name(名称): Text
+		metricName(指标名称): Text
+		metricValue(指标值): Float
+		threshold(阈值): Float
+		timestamp(测量时间): STD.Timestamp
+		dataSource(数据来源): Text
+		unit(测量单位): Text
+	relations:
+		leadTo(导致): JitterAndDegradationEvent
+		affectsExperience(影响体验): GameServiceExperience
+
+ActualDownlinkSpeedMetric(实测终端下行速率指标): EntityType
+	desc:实测终端下行速率影响视频业务体验
+	properties:
+		description(描述): Text
+		name(名称): Text
+		metricName(指标名称): Text
+		dataSource(数据来源): Text
+		timestamp(测量时间): STD.Timestamp
+		metricValue(指标值): Float
+		unit(测量单位): Text
+		threshold(阈值): Float
+	relations:
+		leadTo(导致): SpeedMismatchEvent
+		affectsExperience(影响体验): VideoServiceExperience
+
+TerminalConfigEvent(终端配置错误事件): EventType
+	desc:事件详细描述
+	properties:
+		description(描述): Text
+		name(名称): Text
+		subject(事件主体): User
+		severity(事件严重程度): Text
+		eventDescription(事件描述): Text
+		eventId(事件ID): Text
+
+DownlinkSpeedMetric(终端下行速率指标): EntityType
+	desc:终端下行速率影响上网业务体验
+	properties:
+		description(描述): Text
+		name(名称): Text
+		metricName(指标名称): Text
+		dataSource(数据来源): Text
+		unit(测量单位): Text
+		threshold(阈值): Float
+		timestamp(测量时间): STD.Timestamp
+		metricValue(指标值): Float
+	relations:
+		leadTo(导致): InsufficientSpeedEvent
+		affectsExperience(影响体验): WebBrowsingExperience
+
+SimStatusMetric(SIM卡状态指标): EntityType
+	desc:SIM卡状态影响语音业务体验
+	properties:
+		description(描述): Text
+		name(名称): Text
+		metricName(指标名称): Text
+		threshold(阈值): Text
+		unit(测量单位): Text
+		metricValue(指标值): Text
+		dataSource(数据来源): Text
+		timestamp(测量时间): STD.Timestamp
+	relations:
+		leadTo(导致): TerminalConfigEvent
+		affectsExperience(影响体验): VoiceServiceExperience
+
+PortInterceptionEvent(端口拦截事件): EventType
+	desc:事件详细描述
+	properties:
+		description(描述): Text
+		name(名称): Text
+		subject(事件主体): User
+		eventDescription(事件描述): Text
+		eventId(事件ID): Text
+		severity(事件严重程度): Text
+
+ForwardingDelayMetric(转发时延指标): EntityType
+	desc:影响程度评分，0-1之间
+	properties:
+		description(描述): Text
+		name(名称): Text
+		metricName(指标名称): Text
+		timestamp(测量时间): STD.Timestamp
+		unit(测量单位): Text
+		dataSource(数据来源): Text
+		metricValue(指标值): Float
+		threshold(阈值): Float
+	relations:
+		leadTo(导致): DelayDegradationEvent
+		affectsExperience(影响体验): WebBrowsingExperience
+			rule: [[
+				Define (s:ForwardingDelayMetric)-[p:affectsExperience]->(o:WebBrowsingExperience) {
+				STRUCTURE {
+					(cn:CoreNetwork)-[:hasForwardingDelayMetric]->(s),
+					(service:WebBrowsingService)-[:bearOnCn]->(cn),
+					(o)-[:belongsTo]->(service)
+					}
+				CONSTRAINT {
+					R1("指标超过时延阈值"): s.metricValue > 100
+					R2("确保业务类型匹配"): o.serviceType == "web_browsing"
+					}
+					}
+				]]
+
+GameServiceExperience(游戏业务体验): EntityType
+	desc:游戏业务体验详情描述
+	properties:
+		description(描述): Text
+		name(名称): Text
+		experienceId(体验ID): Text
+		dataSource(数据来源): Text
+		serviceType(业务类型): Text
+		timestamp(评价时间): STD.Timestamp
+		experienceContent(体验内容): Text
+		userId(用户ID): Text
+		rating(体验评分): Integer
+		feedback(反馈内容): Text
+
+SimArrearsStatusMetric(SIM卡欠费状态指标): EntityType
+	desc:SIM卡欠费状态影响打电话业务体验
+	properties:
+		description(描述): Text
+		name(名称): Text
+		metricName(指标名称): Text
+		metricValue(指标值): Text
+		dataSource(数据来源): Text
+		unit(测量单位): Text
+		timestamp(测量时间): STD.Timestamp
+		threshold(阈值): Text
+	relations:
+		leadTo(导致): SubscriptionAbnormalEvent
+		affectsExperience(影响体验): PhoneCallsServiceExperience
+
+SubscriptionAbnormalEvent(签约异常事件): EventType
+	desc:事件详细描述
+	properties:
+		description(描述): Text
+		name(名称): Text
+		subject(事件主体): User
+		eventDescription(事件描述): Text
+		eventId(事件ID): Text
+		severity(事件严重程度): Text
+
+ServiceResponseEvent(服务响应慢事件): EventType
+	desc:事件详细描述
+	properties:
+		description(描述): Text
+		name(名称): Text
+		subject(事件主体): ServiceProvider
+		severity(事件严重程度): Text
+		eventDescription(事件描述): Text
+		eventId(事件ID): Text
+
+ServiceProvider(服务提供商): EntityType
+	desc:服务提供商具有游戏服务器负载率指标
+	properties:
+		description(描述): Text
+		name(名称): Text
+		spId(SP ID): Text
+		spName(SP名称): Text
+	relations:
+		hasCdnCacheHitRateMetric(具有CDN缓存命中率指标): CdnCacheHitRateMetric
+		hasServerResponseTimeMetric(具有服务器响应时间指标): ServerResponseTimeMetric
+		hasGameServerLoadMetric(具有游戏服务器负载率指标): GameServerLoadMetric
+		hasScanAppResponseTimeMetric(具有扫码APP响应时间指标): ScanAppResponseTimeMetric
+
+SignalFailureEvent(信令失败事件): EventType
+	desc:事件详细描述
+	properties:
+		description(描述): Text
+		name(名称): Text
+		subject(事件主体): CoreNetwork
+		severity(事件严重程度): Text
+		eventId(事件ID): Text
+		eventDescription(事件描述): Text
+
+ServiceCongestionEvent(服务拥塞事件): EventType
+	desc:事件详细描述
+	properties:
+		description(描述): Text
+		name(名称): Text
+		subject(事件主体): ServiceProvider
+		eventId(事件ID): Text
+		severity(事件严重程度): Text
+		eventDescription(事件描述): Text
+
+ScanQrcodeService(扫码业务): EntityType
+	desc:扫码业务承载在服务提供商域
+	properties:
+		description(描述): Text
+		name(名称): Text
+		serviceId(业务ID): Text
+	relations:
+		bearOnCn(承载在核心网域): CoreNetwork
+		bearOnUser(承载在UE域): User
+		bearOnSp(承载在SP域): ServiceProvider
+		bearOnCell(承载在无线域): Cell
+
+WebBrowsingExperience(上网业务体验): EntityType
+	desc:关系建立时间
+	properties:
+		description(描述): Text
+		name(名称): Text
+		experienceId(体验ID): Text
+		timestamp(评价时间): STD.Timestamp
+		userId(用户ID): Text
+		serviceType(业务类型): Text
+		experienceContent(体验内容): Text
+		dataSource(数据来源): Text
+		feedback(反馈内容): Text
+		rating(体验评分): Integer
+	relations:
+		belongsTo(属于): WebBrowsingService
+
+SpeedFluctuationEvent(速率波动事件): EventType
+	desc:事件详细描述
+	properties:
+		description(描述): Text
+		name(名称): Text
+		subject(事件主体): Cell
+		eventDescription(事件描述): Text
+		eventId(事件ID): Text
+		severity(事件严重程度): Text
+
+ResidenceFailureEvent(驻留失败事件): EventType
+	desc:事件详细描述
+	properties:
+		description(描述): Text
+		name(名称): Text
+		subject(事件主体): Cell
+		severity(事件严重程度): Text
+		eventDescription(事件描述): Text
+		eventId(事件ID): Text
+
+UserSubscriptionStatusMetric(用户签约状态指标): EntityType
+	desc:用户签约状态影响无信号业务体验
+	properties:
+		description(描述): Text
+		name(名称): Text
+		metricName(指标名称): Text
+		timestamp(测量时间): STD.Timestamp
+		dataSource(数据来源): Text
+		threshold(阈值): Text
+		metricValue(指标值): Text
+		unit(测量单位): Text
+	relations:
+		leadTo(导致): SubscriptionAbnormalEvent
+		affectsExperience(影响体验): NoSignalServiceExperience
+
+ScanAppResponseTimeMetric(扫码接口响应时延指标): EntityType
+	desc:扫码接口响应时延影响扫码业务体验
+	properties:
+		description(描述): Text
+		name(名称): Text
+		metricName(指标名称): Text
+		dataSource(数据来源): Text
+		unit(测量单位): Text
+		metricValue(指标值): Float
+		threshold(阈值): Float
+		timestamp(测量时间): STD.Timestamp
+	relations:
+		leadTo(导致): ServiceNoUseEvent
+		affectsExperience(影响体验): CodeServiceExperience
+
+CdnCacheHitRateMetric(CDN缓存命中率指标): EntityType
+	desc:CDN缓存命中率影响视频业务体验
+	properties:
+		description(描述): Text
+		name(名称): Text
+		metricName(指标名称): Text
+		metricValue(指标值): Float
+		timestamp(测量时间): STD.Timestamp
+		dataSource(数据来源): Text
+		unit(测量单位): Text
+		threshold(阈值): Float
+	relations:
+		leadTo(导致): CacheInvalidationEvent
+		affectsExperience(影响体验): VideoServiceExperience
+
+VideoService(视频业务): EntityType
+	desc:视频业务承载在服务提供商域
+	properties:
+		description(描述): Text
+		name(名称): Text
+		serviceId(业务ID): Text
+	relations:
+		bearOnCn(承载在核心网域): CoreNetwork
+		bearOnSp(承载在SP域): ServiceProvider
+		bearOnUser(承载在UE域): User
+		bearOnCell(承载在无线域): Cell
+
+VolteSwitchMetric(VoLTE开关指标): EntityType
+	desc:VoLTE开关影响无信号业务体验
+	properties:
+		description(描述): Text
+		name(名称): Text
+		metricName(指标名称): Text
+		metricValue(指标值): Text
+		dataSource(数据来源): Text
+		timestamp(测量时间): STD.Timestamp
+		unit(测量单位): Text
+		threshold(阈值): Text
+	relations:
+		leadTo(导致): TerminalConfigEvent
+		affectsExperience(影响体验): NoSignalServiceExperience
+
+GamePingValueMetric(游戏内ping值指标): EntityType
+	desc:游戏内ping值影响游戏业务体验
+	properties:
+		description(描述): Text
+		name(名称): Text
+		metricName(指标名称): Text
+		dataSource(数据来源): Text
+		metricValue(指标值): Float
+		threshold(阈值): Float
+		timestamp(测量时间): STD.Timestamp
+		unit(测量单位): Text
+	relations:
+		leadTo(导致): DelayDegradationEvent
+		affectsExperience(影响体验): GameServiceExperience
+
+AppPermissionMetric(APP权限指标): EntityType
+	desc:APP权限影响扫码业务体验
+	properties:
+		description(描述): Text
+		name(名称): Text
+		metricName(指标名称): Text
+		timestamp(测量时间): STD.Timestamp
+		threshold(阈值): Text
+		metricValue(指标值): Text
+		unit(测量单位): Text
+		dataSource(数据来源): Text
+	relations:
+		leadTo(导致): TerminalConfigEvent
+		affectsExperience(影响体验): CodeServiceExperience
+
+User(用户): EntityType
+	desc:用户具有SIM卡状态指标
+	properties:
+		description(描述): Text
+		name(名称): Text
+		userId(用户ID): Text
+	relations:
+		hasVolteSwitchMetric(具有VoLTE开关指标): VolteSwitchMetric
+		hasDownlinkSpeedMetric(具有终端下行速率指标): DownlinkSpeedMetric
+		hasGamePingValueMetric(具有游戏内ping值指标): GamePingValueMetric
+		hasActualDownlinkSpeedMetric(具有实测终端下行速率指标): ActualDownlinkSpeedMetric
+		hasSimStatusMetric(具有SIM卡状态指标): SimStatusMetric
+		hasAppPermissionMetric(具有APP权限指标): AppPermissionMetric
+		hasSimArrearsStatusMetric(具有SIM卡欠费状态指标): SimArrearsStatusMetric
+
+DownlinkPrbUtilizationMetric(下行PRB利用率指标): EntityType
+	desc:下行PRB利用率影响上网业务体验
+	properties:
+		description(描述): Text
+		name(名称): Text
+		metricName(指标名称): Text
+		dataSource(数据来源): Text
+		unit(测量单位): Text
+		metricValue(指标值): Float
+		threshold(阈值): Float
+		timestamp(测量时间): STD.Timestamp
+	relations:
+		leadTo(导致): ResourceCongestionEvent
+		affectsExperience(影响体验): WebBrowsingExperience
+
+SpeedMismatchEvent(速率不匹配事件): EventType
+	desc:事件详细描述            constraint
+	properties:
+		description(描述): Text
+		name(名称): Text
+		subject(事件主体): User
+		severity(事件严重程度): Text
+		eventDescription(事件描述): Text
+		eventId(事件ID): Text
+
+ImsRegistrationSuccessRateMetric(IMS注册成功率指标): EntityType
+	desc:IMS注册成功率影响打电话业务体验
+	properties:
+		description(描述): Text
+		name(名称): Text
+		metricName(指标名称): Text
+		threshold(阈值): Float
+		metricValue(指标值): Float
+		timestamp(测量时间): STD.Timestamp
+		unit(测量单位): Text
+		dataSource(数据来源): Text
+	relations:
+		leadTo(导致): SignalFailureEvent
+		affectsExperience(影响体验): PhoneCallsServiceExperience
+
+LowLatencyChannelDelayMetric(低时延通道转发时延指标): EntityType
+	desc:低时延通道转发时延影响游戏业务体验
+	properties:
+		description(描述): Text
+		name(名称): Text
+		metricName(指标名称): Text
+		timestamp(测量时间): STD.Timestamp
+		dataSource(数据来源): Text
+		threshold(阈值): Float
+		unit(测量单位): Text
+		metricValue(指标值): Float
+	relations:
+		leadTo(导致): DelayDegradationEvent
+		affectsExperience(影响体验): GameServiceExperience
+
+AddressFailureEvent(寻址失败事件): EventType
+	desc:事件详细描述
+	properties:
+		description(描述): Text
+		name(名称): Text
+		subject(事件主体): CoreNetwork
+		eventDescription(事件描述): Text
+		severity(事件严重程度): Text
+		eventId(事件ID): Text
+
+InsufficientSpeedEvent(速率不足事件): EventType
+	desc:事件详细描述
+	properties:
+		description(描述): Text
+		name(名称): Text
+		subject(事件主体): User
+		severity(事件严重程度): Text
+		eventId(事件ID): Text
+		eventDescription(事件描述): Text
+
+SinrMetric(SINR值指标): EntityType
+	desc:SINR值影响打电话业务体验
+	properties:
+		description(描述): Text
+		name(名称): Text
+		metricName(指标名称): Text
+		unit(测量单位): Text
+		metricValue(指标值): Float
+		threshold(阈值): Float
+		dataSource(数据来源): Text
+		timestamp(测量时间): STD.Timestamp
+	relations:
+		leadTo(导致): SignalDegradationEvent
+		affectsExperience(影响体验): PhoneCallsServiceExperience
+
+GameServerLoadMetric(游戏服务器负载率指标): EntityType
+	desc:游戏服务器负载率影响游戏业务体验
+	properties:
+		description(描述): Text
+		name(名称): Text
+		metricName(指标名称): Text
+		dataSource(数据来源): Text
+		unit(测量单位): Text
+		metricValue(指标值): Float
+		threshold(阈值): Float
+		timestamp(测量时间): STD.Timestamp
+	relations:
+		leadTo(导致): ServiceCongestionEvent
+		affectsExperience(影响体验): GameServiceExperience
+
+RrcSuccessMetric(RRC建立成功率指标): EntityType
+	desc:RRC建立成功率影响扫码业务体验
+	properties:
+		description(描述): Text
+		name(名称): Text
+		metricName(指标名称): Text
+		metricValue(指标值): Float
+		timestamp(测量时间): STD.Timestamp
+		unit(测量单位): Text
+		threshold(阈值): Float
+		dataSource(数据来源): Text
+	relations:
+		leadTo(导致): SignalFailureEvent
+		affectsExperience(影响体验): CodeServiceExperience
+
+PhoneCallsServiceExperience(电话业务体验): EntityType
+	desc:电话业务体验详情描述
+	properties:
+		description(描述): Text
+		name(名称): Text
+		experienceId(体验ID): Text
+		rating(体验评分): Integer
+		serviceType(业务类型): Text
+		dataSource(数据来源): Text
+		userId(用户ID): Text
+		feedback(反馈内容): Text
+		timestamp(评价时间): STD.Timestamp
+		experienceContent(体验内容): Text
+
+NoSignalServiceExperience(无信号业务体验): EntityType
+	desc:无信号业务体验详情描述
+	properties:
+		description(描述): Text
+		name(名称): Text
+		experienceId(体验ID): Text
+		serviceType(业务类型): Text
+		timestamp(评价时间): STD.Timestamp
+		rating(体验评分): Integer
+		feedback(反馈内容): Text
+		userId(用户ID): Text
+		dataSource(数据来源): Text
+		experienceContent(体验内容): Text
+
+SignalTransmissionFailureEvent(信令传输失败事件): EventType
+	desc:事件详细描述
+	properties:
+		description(描述): Text
+		name(名称): Text
+		subject(事件主体): CoreNetwork
+		severity(事件严重程度): Text
+		eventDescription(事件描述): Text
+		eventId(事件ID): Text
+
+Cell(小区): EntityType
+	desc:小区具有小区驻留成功率指标
+	properties:
+		description(描述): Text
+		name(名称): Text
+		cellId(小区ID): Text
+		cellLocation(小区位置): Text
+	relations:
+		hasUplinkDownlinkJitterMetric(具有上下行抖动指标): UplinkDownlinkJitterMetric
+		hasDownlinkPrbUtilizationMetric(具有下行PRB利用率指标): DownlinkPrbUtilizationMetric
+		hasRrcSuccessMetric(具有RRC建立成功率指标): RrcSuccessMetric
+		hasRsrpMetric(具有RSRP指标): RsrpMetric
+		hasSinrMetric(具有SINR指标): SinrMetric
+		hasDownlinkThroughputFluctuationMetric(具有下行吞吐量波动幅度指标): DownlinkThroughputFluctuationMetric
+		hasCellResidenceSuccessRateMetric(具有小区驻留成功率指标): CellResidenceSuccessRateMetric

@@ -22,6 +22,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
 
 public class LocalReasonerResult {
 
@@ -161,11 +162,16 @@ public class LocalReasonerResult {
 
   @Override
   public String toString() {
+    if (StringUtils.isNotEmpty(errMsg)) {
+      return errMsg;
+    }
     if (graphResult) {
       return ddlToString();
-    } else {
-      return rowsToString();
     }
+    if (columns == null || rows == null) {
+      return "";
+    }
+    return rowsToString();
   }
 
   protected String rowsToString() {

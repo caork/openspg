@@ -253,10 +253,13 @@ public abstract class GraphMLLocalGraphLoader extends AbstractLocalGraphLoader {
   }
 
   private static void addDefineEdges(Map<String, Set<String>> schema, String dsl) {
+    String label =
+        "[A-Za-z_][A-Za-z0-9_]*(?:\\.[A-Za-z_][A-Za-z0-9_]*)*(?:/`[^`]+`)?";
+    String edge = "[A-Za-z_][A-Za-z0-9_]*";
     Pattern pattern =
         Pattern.compile(
-            "Define\\s*\\(\\s*\\w+\\s*:\\s*([A-Za-z0-9_]+)\\s*\\)\\s*-\\[\\s*\\w*\\s*:"
-                + "\\s*([A-Za-z0-9_]+)\\s*\\]\\s*->\\s*\\(\\s*\\w+\\s*:\\s*([A-Za-z0-9_]+)\\s*\\)",
+            "Define\\s*\\(\\s*\\w+\\s*:\\s*(" + label + ")\\s*\\)\\s*-\\[\\s*\\w*\\s*:"
+                + "\\s*(" + edge + ")\\s*\\]\\s*->\\s*\\(\\s*\\w+\\s*:\\s*(" + label + ")\\s*\\)",
             Pattern.MULTILINE);
     Matcher matcher = pattern.matcher(dsl);
     while (matcher.find()) {

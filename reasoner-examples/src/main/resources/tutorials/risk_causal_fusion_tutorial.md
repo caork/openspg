@@ -13,7 +13,7 @@ fast way to:
 2) Detect **device rings** and materialize a risk signal node for evidence.
 3) Link **operational events** (logistics strikes) to downstream merchant impact events.
 4) Explore the **transfer network** from seed accounts with optional context (devices, IPs, merchants,
-   events, and derived signals).
+events, and derived signals).
 
 This example mirrors the whitepaper’s two typical cases: risk mining graphs (users/devices/transactions) and
 enterprise causal graphs (event chains like "logistics strike" leading to "refund spike").
@@ -68,17 +68,17 @@ Edges:
 The runner in `RiskCausalFusionLocalRunnerExample` does four things:
 
 1) **Load the KGDSL**
-   It reads `risk_causal_fusion.kgdsl` from resources.
+It reads `risk_causal_fusion.kgdsl` from resources.
 
 2) **Infer and register the schema**
-   It calls `GraphMLLocalGraphLoader.buildCatalog(..., dsl)` to infer node/edge properties from the
-   GraphML file and add edge types declared in `Define` blocks.
+It calls `GraphMLLocalGraphLoader.buildCatalog(..., dsl)` to infer node/edge properties from the
+GraphML file and add edge types declared in `Define` blocks.
 
 3) **Seed the query**
-   It sets `startIdList` to two `Account` nodes so the exploration starts from those seeds.
+It sets `startIdList` to two `Account` nodes so the exploration starts from those seeds.
 
 4) **Load GraphML data**
-   `RiskCausalFusionGraphMLLoader` loads `risk_causal_fusion.graphml` into the in-memory graph.
+`RiskCausalFusionGraphMLLoader` loads `risk_causal_fusion.graphml` into the in-memory graph.
 
 The example also keeps `spg.reasoner.lube.subquery.enable=false` so the `Define` blocks run in order and
 materialize derived edges before the final exploration query.
@@ -117,7 +117,7 @@ Highlights:
 - Demonstrates `createNodeInstance` and edge materialization.
 - Computes `personCnt` to score the signal.
 - Uses an `__optional__` edge in the `GraphStructure` to bind the `sig` alias even though the edge
-  does not exist yet (it is created by the action).
+does not exist yet (it is created by the action).
 
 ### 3) Event causality (enterprise causal graph)
 
