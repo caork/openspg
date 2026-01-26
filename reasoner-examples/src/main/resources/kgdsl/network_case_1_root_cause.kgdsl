@@ -1,84 +1,4 @@
-// Root cause inference: SIM arrears
-Define (exp:PhoneCallsServiceExperience)-[rc:rootCause]->(ev:SubscriptionAbnormalEvent) {
-  GraphStructure {
-    u [User]
-    sim [SimArrearsStatusMetric]
-    exp [PhoneCallsServiceExperience]
-    ev [SubscriptionAbnormalEvent]
-    u->sim [hasSimArrearsStatusMetric]
-    sim->exp [affectsExperience]
-    sim->ev [leadTo]
-  }
-  Rule {
-    R1: sim.metricValue == 'ARREARS'
-  }
-  Action {
-    createEdgeInstance(
-      src=exp,
-      dst=ev,
-      type=rootCause,
-      value={}
-    )
-  }
-}
-
-// Root cause inference: IMS registration failure
-Define (exp:PhoneCallsServiceExperience)-[rc:rootCause]->(ev:SignalFailureEvent) {
-  GraphStructure {
-    u [User]
-    sim [SimArrearsStatusMetric]
-    exp [PhoneCallsServiceExperience]
-    ims [ImsRegistrationSuccessRateMetric]
-    ev [SignalFailureEvent]
-    u->sim [hasSimArrearsStatusMetric]
-    sim->exp [affectsExperience]
-    ims->exp [affectsExperience]
-    ims->ev [leadTo]
-  }
-  Rule {
-    R1: sim.metricValue != 'ARREARS'
-    R2: ims.metricValue < ims.threshold
-    R3: exp.rating <= 2
-  }
-  Action {
-    createEdgeInstance(
-      src=exp,
-      dst=ev,
-      type=rootCause,
-      value={}
-    )
-  }
-}
-
-// Root cause inference: low SINR
-Define (exp:PhoneCallsServiceExperience)-[rc:rootCause]->(ev:SignalDegradationEvent) {
-  GraphStructure {
-    u [User]
-    sim [SimArrearsStatusMetric]
-    exp [PhoneCallsServiceExperience]
-    sinr [SinrMetric]
-    ev [SignalDegradationEvent]
-    u->sim [hasSimArrearsStatusMetric]
-    sim->exp [affectsExperience]
-    exp<->sinr [affectsExperience]
-    sinr->ev [leadTo]
-  }
-  Rule {
-    R1: sim.metricValue != 'ARREARS'
-    R2: sinr.metricValue < sinr.threshold
-    R3: exp.rating <= 2
-  }
-  Action {
-    createEdgeInstance(
-      src=exp,
-      dst=ev,
-      type=rootCause,
-      value={}
-    )
-  }
-}
-
-// Exploration query: return root cause and context
+// Root cause query: return context and inferred cause in one plan
 GraphStructure {
   exp [PhoneCallsServiceExperience, __start__='true']
   u [User]
@@ -92,11 +12,32 @@ GraphStructure {
   sim->exp [affectsExperience]
   exp<->sinr [affectsExperience, __optional__='true'] as sinrEdge
   ims->exp [affectsExperience, __optional__='true'] as imsEdge
-  exp->evArrears [rootCause, __optional__='true'] as arrearsCause
-  exp->evSinr [rootCause, __optional__='true'] as sinrCause
-  exp->evIms [rootCause, __optional__='true'] as imsCause
+  sim->evArrears [leadTo, __optional__='true'] as arrearsEdge
+  sinr->evSinr [leadTo, __optional__='true'] as sinrEvent
+  ims->evIms [leadTo, __optional__='true'] as imsEvent
 }
 Rule {
+  arrearsHit = exist(arrearsEdge) && sim.metricValue == 'ARREARS'
+  imsHit =
+    exist(imsEvent)
+    && sim.metricValue != 'ARREARS'
+    && ims.metricValue < ims.threshold
+    && exp.rating <= 2
+  sinrHit =
+    exist(sinrEvent)
+    && sim.metricValue != 'ARREARS'
+    && sinr.metricValue < sinr.threshold
+    && exp.rating <= 2
+  rootCauseType =
+    rule_value(
+      arrearsHit,
+      'SIM_ARREARS',
+      rule_value(imsHit, 'IMS_REG_FAIL', rule_value(sinrHit, 'SINR_DEGRADATION', 'UNKNOWN')))
+  rootCauseEventId =
+    rule_value(
+      arrearsHit,
+      evArrears.eventId,
+      rule_value(imsHit, evIms.eventId, rule_value(sinrHit, evSinr.eventId, '')))
 }
 Action {
   get(
@@ -108,9 +49,8 @@ Action {
     sinr.threshold,
     ims.metricValue,
     ims.threshold,
-    evArrears.eventId,
-    evSinr.eventId,
-    evIms.eventId,
+    rootCauseType,
+    rootCauseEventId,
     __path__
   )
 }

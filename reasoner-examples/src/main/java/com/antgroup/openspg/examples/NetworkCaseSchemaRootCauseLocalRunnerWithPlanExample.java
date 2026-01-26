@@ -42,9 +42,9 @@ public class NetworkCaseSchemaRootCauseLocalRunnerWithPlanExample {
       "reasoner-examples/src/main/resources/examples/NetworkCaseSchemaRootCauseLocalRunnerWithPlanExample/output";
   private static final String BRANCH_MID = "\u251c\u2500";
   private static final String BRANCH_END = "\u2514\u2500";
-  private static final int DOT_MAX_LABEL_LENGTH = 180;
-  private static final int DOT_MAX_LINE_LENGTH = 48;
-  private static final int DOT_MAX_LINES = 4;
+  private static final int DOT_MAX_LABEL_LENGTH = 10000;
+  private static final int DOT_MAX_LINE_LENGTH = 72;
+  private static final int DOT_MAX_LINES = 200;
 
   public static void main(String[] args) {
     String dsl = loadDsl(DSL_RESOURCE);
@@ -247,14 +247,12 @@ public class NetworkCaseSchemaRootCauseLocalRunnerWithPlanExample {
         args = args.substring(0, DOT_MAX_LABEL_LENGTH - 3) + "...";
       }
       compact = args.isEmpty() ? name : name + "(" + args + ")";
-    } else if (compact.length() > DOT_MAX_LABEL_LENGTH) {
-      compact = compact.substring(0, DOT_MAX_LABEL_LENGTH - 3) + "...";
     }
     return wrapLabel(compact, DOT_MAX_LINE_LENGTH, DOT_MAX_LINES);
   }
 
   private static String escapeDot(String value) {
-    return value.replace("\\", "\\\\").replace("\"", "\\\"").replace("\n", "\\n");
+    return value.replace("\"", "\\\"").replace("\n", "\\n");
   }
 
   private static String wrapLabel(String text, int maxLineLength, int maxLines) {
@@ -275,13 +273,13 @@ public class NetworkCaseSchemaRootCauseLocalRunnerWithPlanExample {
         }
       }
       if (builder.length() > 0) {
-        builder.append("\\n");
+        builder.append("\n");
       }
       builder.append(line);
       lineCount++;
     }
     if (!remaining.isEmpty()) {
-      builder.append("\\n...");
+      builder.append("\n...");
     }
     return builder.toString();
   }
