@@ -1,5 +1,6 @@
 package com.antgroup.openspg.examples;
 
+import com.alibaba.fastjson.JSON;
 import com.antgroup.openspg.examples.loader.NetworkCaseSchemaWithDataLoader;
 import com.antgroup.openspg.examples.loader.SchemaLocalGraphLoader;
 import com.antgroup.openspg.reasoner.common.constants.Constants;
@@ -27,9 +28,12 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.HashMap;
 import java.util.List;
+import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
@@ -43,8 +47,19 @@ public class NetworkCaseSchemaRootCauseLocalRunnerWithPlanExample {
   private static final String BRANCH_MID = "\u251c\u2500";
   private static final String BRANCH_END = "\u2514\u2500";
   private static final int DOT_MAX_LABEL_LENGTH = 10000;
-  private static final int DOT_MAX_LINE_LENGTH = 72;
+  private static final int DOT_MAX_LINE_LENGTH = 48;
   private static final int DOT_MAX_LINES = 200;
+  private static final String[] NODE_ID_KEYS = {
+    "id",
+    "experienceId",
+    "eventId",
+    "userId",
+    "cellId",
+    "serviceId",
+    "metricId"
+  };
+  private static final String[] NODE_NAME_KEYS = {"name", "metricName"};
+  private static volatile List<RoutePath> lastRoutePaths = new ArrayList<>();
 
   public static void main(String[] args) {
     String dsl = loadDsl(DSL_RESOURCE);
@@ -59,12 +74,20 @@ public class NetworkCaseSchemaRootCauseLocalRunnerWithPlanExample {
 
     List<Tuple2<String, String>> startIdList =
         Lists.newArrayList(
-            new Tuple2<>("EXP-1", "PhoneCallsServiceExperience"),
-            new Tuple2<>("EXP-2", "PhoneCallsServiceExperience"));
+            new Tuple2<>("EXP_1", "PhoneCallsServiceExperience"),
+            new Tuple2<>("EXP_2", "PhoneCallsServiceExperience"));
+
+    boolean outputGraph = false;
+    for (String arg : args) {
+      if ("--graph".equalsIgnoreCase(arg) || "graph".equalsIgnoreCase(arg)) {
+        outputGraph = true;
+        break;
+      }
+    }
 
     Map<String, Object> params = new HashMap<>();
     params.put(ConfigKey.KG_REASONER_BINARY_PROPERTY, "false");
-    params.put(ConfigKey.KG_REASONER_OUTPUT_GRAPH, "true");
+    params.put(ConfigKey.KG_REASONER_OUTPUT_GRAPH, String.valueOf(outputGraph));
     params.put(Constants.SPG_REASONER_PLAN_PRETTY_PRINT_LOGGER_ENABLE, "false");
     params.put(Constants.START_LABEL, startIdList.get(0)._2);
 
@@ -95,8 +118,346 @@ public class NetworkCaseSchemaRootCauseLocalRunnerWithPlanExample {
 
     LocalReasonerRunner runner = new LocalReasonerRunner();
     LocalReasonerResult result = runner.run(task);
-    System.out.println(result);
+    if (outputGraph) {
+      System.out.println(result);
+    } else {
+      lastRoutePaths = extractRoutePaths(result);
+      for (RoutePath route : lastRoutePaths) {
+        System.out.println(route);
+      }
+    }
     executor.shutdown();
+  }
+
+  public static List<RoutePath> getLastRoutePaths() {
+    return lastRoutePaths;
+  }
+
+  public static List<RoutePath> extractRoutePaths(LocalReasonerResult result) {
+    if (result == null) {
+      return new ArrayList<>();
+    }
+    if (result.getErrMsg() != null && !result.getErrMsg().isEmpty()) {
+      return new ArrayList<>();
+    }
+    List<String> columns = result.getColumns();
+    List<Object[]> rows = result.getRows();
+    if (columns == null || rows == null) {
+      return new ArrayList<>();
+    }
+    int pathIndex = findColumnIndex(columns, Constants.GET_PATH_KEY);
+    if (pathIndex < 0) {
+      return new ArrayList<>();
+    }
+    List<RoutePath> routePaths = new ArrayList<>();
+    for (int rowIndex = 0; rowIndex < rows.size(); rowIndex++) {
+      Object[] row = rows.get(rowIndex);
+      Object pathObj = pathIndex < row.length ? row[pathIndex] : null;
+      if (pathObj == null) {
+        continue;
+      }
+      List<Map<String, Object>> entries;
+      try {
+        entries = parsePathEntries(String.valueOf(pathObj));
+      } catch (Exception e) {
+        continue;
+      }
+      PathSummary summary = buildPathSummary(entries);
+      List<Route> routes = buildRoutes(summary);
+      if (!routes.isEmpty()) {
+        for (Route route : routes) {
+          routePaths.add(toRoutePath(route, summary.nodesByInternalId));
+        }
+        continue;
+      }
+      for (EdgeInfo edge : summary.edges) {
+        routePaths.add(toRoutePath(edge, summary.nodesByInternalId));
+      }
+    }
+    return routePaths;
+  }
+
+  private static int findColumnIndex(List<String> columns, String name) {
+    for (int i = 0; i < columns.size(); i++) {
+      if (name.equals(columns.get(i))) {
+        return i;
+      }
+    }
+    return -1;
+  }
+
+  @SuppressWarnings("unchecked")
+  private static List<Map<String, Object>> parsePathEntries(String value) {
+    return (List<Map<String, Object>>) (List<?>) JSON.parseArray(value, Map.class);
+  }
+
+  private static PathSummary buildPathSummary(List<Map<String, Object>> entries) {
+    Map<String, NodeInfo> nodesByInternalId = new LinkedHashMap<>();
+    List<NodeInfo> nodes = new ArrayList<>();
+    List<EdgeInfo> edges = new ArrayList<>();
+    Set<String> edgeKeys = new HashSet<>();
+
+    if (entries == null) {
+      return new PathSummary(nodes, edges, nodesByInternalId);
+    }
+
+    for (Map<String, Object> entry : entries) {
+      if (!isVertex(entry)) {
+        continue;
+      }
+      if (isTruthy(entry.get(Constants.NONE_VERTEX_FLAG))) {
+        continue;
+      }
+      NodeInfo node = toNodeInfo(entry);
+      if (node.internalId == null || node.internalId.isEmpty()) {
+        continue;
+      }
+      if (!nodesByInternalId.containsKey(node.internalId)) {
+        nodesByInternalId.put(node.internalId, node);
+        nodes.add(node);
+      }
+    }
+
+    for (Map<String, Object> entry : entries) {
+      if (!isEdge(entry)) {
+        continue;
+      }
+      if (isTruthy(entry.get(Constants.OPTIONAL_EDGE_FLAG))
+          && (entry.get(Constants.EDGE_FROM_INTERNAL_ID_KEY) == null
+              || entry.get(Constants.EDGE_TO_INTERNAL_ID_KEY) == null)) {
+        continue;
+      }
+      EdgeInfo edge = toEdgeInfo(entry, nodesByInternalId);
+      if (edge == null) {
+        continue;
+      }
+      if (edgeKeys.add(edge.id + "|" + edge.name)) {
+        edges.add(edge);
+      }
+    }
+
+    return new PathSummary(nodes, edges, nodesByInternalId);
+  }
+
+  private static List<Route> buildRoutes(PathSummary summary) {
+    if (summary.edges.isEmpty()) {
+      return new ArrayList<>();
+    }
+    Map<String, List<EdgeInfo>> adjacency = new LinkedHashMap<>();
+    Map<String, Integer> inDegree = new HashMap<>();
+    for (EdgeInfo edge : summary.edges) {
+      adjacency.computeIfAbsent(edge.fromInternalId, ignored -> new ArrayList<>()).add(edge);
+      inDegree.put(edge.toInternalId, inDegree.getOrDefault(edge.toInternalId, 0) + 1);
+      inDegree.putIfAbsent(edge.fromInternalId, 0);
+    }
+
+    List<String> sources = new ArrayList<>();
+    for (Map.Entry<String, Integer> entry : inDegree.entrySet()) {
+      String nodeId = entry.getKey();
+      if (entry.getValue() == 0 && adjacency.containsKey(nodeId)) {
+        sources.add(nodeId);
+      }
+    }
+    if (sources.isEmpty()) {
+      sources.addAll(adjacency.keySet());
+    }
+
+    List<Route> routes = new ArrayList<>();
+    for (String source : sources) {
+      dfsRoutes(source, source, adjacency, new ArrayList<>(), new HashSet<>(), routes);
+    }
+    return routes;
+  }
+
+  private static void dfsRoutes(
+      String source,
+      String current,
+      Map<String, List<EdgeInfo>> adjacency,
+      List<EdgeInfo> pathEdges,
+      Set<String> visited,
+      List<Route> routes) {
+    if (visited.contains(current)) {
+      return;
+    }
+    visited.add(current);
+    List<EdgeInfo> outgoing = adjacency.get(current);
+    if (outgoing == null || outgoing.isEmpty()) {
+      if (!pathEdges.isEmpty()) {
+        routes.add(new Route(source, new ArrayList<>(pathEdges)));
+      }
+    } else {
+      for (EdgeInfo edge : outgoing) {
+        pathEdges.add(edge);
+        dfsRoutes(source, edge.toInternalId, adjacency, pathEdges, visited, routes);
+        pathEdges.remove(pathEdges.size() - 1);
+      }
+    }
+    visited.remove(current);
+  }
+
+  private static RoutePath toRoutePath(Route route, Map<String, NodeInfo> nodesByInternalId) {
+    List<String> nodeIds = new ArrayList<>();
+    String current = route.startInternalId;
+    nodeIds.add(formatNodeId(nodesByInternalId.get(current), current));
+    for (EdgeInfo edge : route.edges) {
+      nodeIds.add(formatNodeId(nodesByInternalId.get(edge.toInternalId), edge.toInternalId));
+      current = edge.toInternalId;
+    }
+    return new RoutePath(nodeIds);
+  }
+
+  private static RoutePath toRoutePath(
+      EdgeInfo edge, Map<String, NodeInfo> nodesByInternalId) {
+    List<String> nodeIds = new ArrayList<>();
+    nodeIds.add(formatNodeId(nodesByInternalId.get(edge.fromInternalId), edge.fromInternalId));
+    nodeIds.add(formatNodeId(nodesByInternalId.get(edge.toInternalId), edge.toInternalId));
+    return new RoutePath(nodeIds);
+  }
+
+  private static String formatNodeId(NodeInfo node, String fallbackId) {
+    String id = fallbackId;
+    if (node != null) {
+      if (node.id != null && !node.id.isEmpty()) {
+        id = node.id;
+      }
+    }
+    return id;
+  }
+
+  private static boolean isVertex(Map<String, Object> entry) {
+    return "vertex".equals(String.valueOf(entry.get(Constants.CONTEXT_TYPE)));
+  }
+
+  private static boolean isEdge(Map<String, Object> entry) {
+    return "edge".equals(String.valueOf(entry.get(Constants.CONTEXT_TYPE)));
+  }
+
+  private static boolean isTruthy(Object value) {
+    if (value == null) {
+      return false;
+    }
+    if (value instanceof Boolean) {
+      return (Boolean) value;
+    }
+    return "true".equalsIgnoreCase(String.valueOf(value));
+  }
+
+  private static NodeInfo toNodeInfo(Map<String, Object> entry) {
+    String internalId = stringValue(entry.get(Constants.VERTEX_INTERNAL_ID_KEY));
+    String id = firstNonBlank(entry, NODE_ID_KEYS);
+    if (id == null || id.isEmpty()) {
+      id = internalId;
+    }
+    String name = firstNonBlank(entry, NODE_NAME_KEYS);
+    if (name == null || name.isEmpty()) {
+      name = stringValue(entry.get(Constants.CONTEXT_LABEL));
+    }
+    return new NodeInfo(internalId, id, name);
+  }
+
+  private static EdgeInfo toEdgeInfo(
+      Map<String, Object> entry, Map<String, NodeInfo> nodesByInternalId) {
+    String fromInternalId = stringValue(entry.get(Constants.EDGE_FROM_INTERNAL_ID_KEY));
+    String toInternalId = stringValue(entry.get(Constants.EDGE_TO_INTERNAL_ID_KEY));
+    if (fromInternalId == null || toInternalId == null) {
+      return null;
+    }
+    String fromId = resolveNodeId(fromInternalId, nodesByInternalId);
+    String toId = resolveNodeId(toInternalId, nodesByInternalId);
+    String edgeId = fromId + "->" + toId;
+    String edgeName = stringValue(entry.get(Constants.CONTEXT_LABEL));
+    return new EdgeInfo(edgeId, edgeName, fromInternalId, toInternalId);
+  }
+
+  private static String resolveNodeId(String internalId, Map<String, NodeInfo> nodesByInternalId) {
+    NodeInfo node = nodesByInternalId.get(internalId);
+    if (node == null) {
+      return internalId;
+    }
+    return node.id;
+  }
+
+  private static String firstNonBlank(Map<String, Object> entry, String[] keys) {
+    for (String key : keys) {
+      String value = stringValue(entry.get(key));
+      if (value != null && !value.isEmpty()) {
+        return value;
+      }
+    }
+    return null;
+  }
+
+  private static String stringValue(Object value) {
+    if (value == null) {
+      return null;
+    }
+    return String.valueOf(value);
+  }
+
+  private static final class PathSummary {
+    private final List<NodeInfo> nodes;
+    private final List<EdgeInfo> edges;
+    private final Map<String, NodeInfo> nodesByInternalId;
+
+    private PathSummary(
+        List<NodeInfo> nodes, List<EdgeInfo> edges, Map<String, NodeInfo> nodesByInternalId) {
+      this.nodes = nodes;
+      this.edges = edges;
+      this.nodesByInternalId = nodesByInternalId;
+    }
+  }
+
+  private static final class Route {
+    private final String startInternalId;
+    private final List<EdgeInfo> edges;
+
+    private Route(String startInternalId, List<EdgeInfo> edges) {
+      this.startInternalId = startInternalId;
+      this.edges = edges;
+    }
+  }
+
+  private static final class NodeInfo {
+    private final String internalId;
+    private final String id;
+    private final String name;
+
+    private NodeInfo(String internalId, String id, String name) {
+      this.internalId = internalId;
+      this.id = id;
+      this.name = name;
+    }
+  }
+
+  private static final class EdgeInfo {
+    private final String id;
+    private final String name;
+    private final String fromInternalId;
+    private final String toInternalId;
+
+    private EdgeInfo(String id, String name, String fromInternalId, String toInternalId) {
+      this.id = id;
+      this.name = name;
+      this.fromInternalId = fromInternalId;
+      this.toInternalId = toInternalId;
+    }
+  }
+
+  public static final class RoutePath {
+    private final List<String> nodeIds;
+
+    private RoutePath(List<String> nodeIds) {
+      this.nodeIds = nodeIds;
+    }
+
+    public List<String> getNodeIds() {
+      return nodeIds;
+    }
+
+    @Override
+    public String toString() {
+      return String.join(" -> ", nodeIds);
+    }
   }
 
   private static String formatPlan(
